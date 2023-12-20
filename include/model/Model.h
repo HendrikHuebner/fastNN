@@ -10,5 +10,16 @@ class Model {
 
 };
 
+enum InitializationFunction {
+    UNIFORM,
+    XAVIER,
+    GAUSSIAN,
+    ZEROS,
+    ONES
+};
+
+
+
+
 
 #endif //FASTNN_MODEL_H
