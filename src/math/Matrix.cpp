@@ -17,7 +17,7 @@ Matrix Matrix::add(const Matrix& o) const {
 
     for(int i = 0; i < this->height; i++) {
         for(int j = 0; j < this->width; j++) {
-            result.data[i * this->width + j] += o.data[i * this->width + j];
+            result[i * this->width + j] += o[i * this->width + j];
         }
     }
 
@@ -34,7 +34,7 @@ Matrix Matrix::sub(const Matrix& o) const {
 
     for(int i = 0; i < this->height; i++) {
         for(int j = 0; j < this->width; j++) {
-            result.data[i * this->width + j] -= o.data[i * this->width + j];
+            result[i * this->width + j] -= o[i * this->width + j];
         }
     }
 
@@ -49,10 +49,10 @@ Matrix Matrix::mul(const Matrix& o) const {
             float cell = 0;
 
             for (int k = 0; k < this->height; k++) {
-                cell += this->data[j + k * this->width] * o.data[k + o.width * i];
+                cell += this->data[j + k * this->width] * o[k + o.width * i];
             }
 
-            result.data[i + result.width*j] = cell;
+            result[i + result.width*j] = cell;
         }
     }
 
@@ -69,19 +69,19 @@ Vector Matrix::mul(const Vector& o) const {
 
     for (int i = 0; i < this->width; i++) {
         for (int j = 0; j < this->height; j++) {
-            result.data[i] += this->data[j + i * this->width] * o.data[j];
+            result[i] += this->data[j + i * this->width] * o[j];
         }
     }
 
     return result;
 }
 
-Matrix Matrix::transpose() {
+Matrix Matrix::transpose() const {
     Matrix result(this->width, this->height);
 
     for (int i = 0; i < this->height; i++) {
         for (int j = 0; j < this->width; j++) {
-            result.data[i * this->width + j] = this->data[j * this->width + i];
+            result[i * this->width + j] = this->data[j * this->width + i];
         }
     }
 

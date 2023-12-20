@@ -24,6 +24,14 @@ public:
         this->data = copy.data;
     }
 
+    float& operator[](size_t index) {
+        return data[index];
+    }
+
+    float operator[](size_t index) const {
+        return data[index];
+    }
+
     Matrix add(const Matrix& other) const;
 
     Matrix sub(const Matrix &o) const;
@@ -32,7 +40,7 @@ public:
 
     Vector mul(const Vector &o) const;
 
-    Matrix transpose();
+    Matrix transpose() const;
 
 
 private:

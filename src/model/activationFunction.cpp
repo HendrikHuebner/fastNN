@@ -9,8 +9,8 @@ inline Vector relu(Vector& vec) {
     Vector out = Vector(vec.size(), 0.0f);
 
     for(int i = 0; i < vec.size(); i++) {
-        if(vec.data[i] > 0) {
-            out.data[i] =  vec.data[i];
+        if(vec[i] > 0) {
+            out[i] = vec[i];
         }
     }
 
@@ -22,8 +22,8 @@ inline Vector dRelu(Vector& vec) {
 
     for(int i = 0; i < vec.size(); i++) {
 
-        if(vec.data[i] > 0) {
-            out.data[i] = 1;
+        if(vec[i] > 0) {
+            out[i] = 1;
         }
     }
 
@@ -34,7 +34,7 @@ inline Vector sigmoid(Vector& vec) {
     Vector out = Vector(vec.size(), 0);
 
     for(int i = 0; i < vec.size(); i++) {
-        out.data[i] = (float) (1/(1 + exp(-vec.data[i])));
+        out[i] = (float) (1/(1 + std::exp(-vec[i])));
     }
 
     return out;
@@ -53,11 +53,11 @@ inline Vector softmax(Vector& vec) {
     double divisor = 0;
 
     for(int i = 0; i < vec.size(); i++) {
-        out.data[i] = (float) exp(vec.data[i] - max);
-        divisor += out.data[i];
+        out[i] = (float) std::exp(vec[i] - max);
+        divisor += out[i];
     }
 
-    out = out.scale(1.0 / divisor);
+    out = out.scale( 1.0 / divisor);
 
     return out;
 }

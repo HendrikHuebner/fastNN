@@ -9,41 +9,56 @@
 #include <vector>
 
 class Vector {
-public:
 
+private:
     std::vector<float> data;
 
-    Vector(int size, float init) {
+public:
+
+    Vector(size_t size, float init) {
         this->data = std::vector<float>(size, init);
     }
 
-    Vector(Vector& copy) : data(copy.data) {}
+    Vector(const Vector& copy) : data(copy.data) {}
 
-    [[nodiscard]] unsigned long size() const {
+    [[nodiscard]] size_t size() const {
         return this->data.size();
+    }
+
+    float& operator[](size_t index) {
+        return data[index];
+    }
+
+    float operator[](size_t index) const {
+        return data[index];
     }
 
     /**
      * Element wise addition
      */
-    Vector add(Vector& other);
+    Vector add(const Vector& other) const;
 
-    Vector sub(Vector& other);
+    Vector sub(const Vector& other) const;
 
 
     /**
      * Element wise multiplication
      */
-    Vector mul(Vector& other);
+    Vector mul(const Vector& other) const;
+
+    Vector div(const Vector& other) const;
 
 
     /**
      * Scalar multiplication
      */
-    Vector scale(float scalar);
+    Vector scale(float scalar) const;
 
 
     float max();
+
+
+    Vector clamp(float min, float max) const;
 };
 
 

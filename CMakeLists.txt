@@ -14,7 +14,8 @@ add_library(fastNN SHARED
         src/math/Vector.cpp
         include/math/Vector.h
         include/model/activationFunction.h
-        src/model/activationFunction.cpp)
+        src/model/activationFunction.cpp
+        src/model/costFunction.cpp)
 
 target_include_directories(fastNN PUBLIC ${INCLUDE_DIR})
 add_executable(test ${CMAKE_CURRENT_SOURCE_DIR}/test/test.cpp)
