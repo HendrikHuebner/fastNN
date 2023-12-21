@@ -32,6 +32,18 @@ public:
         return data[index];
     }
 
+    void set(int x, int y, float f) {
+        this->data[x + y * this->width] = f;
+    }
+
+    int getWidth() const {
+        return this->width;
+    }
+
+    int getHeight() const {
+        return this->height;
+    }
+
     Matrix add(const Matrix& other) const;
 
     Matrix sub(const Matrix &o) const;

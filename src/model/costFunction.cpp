@@ -3,7 +3,6 @@
 //
 
 #include <cmath>
-#include <stdexcept>
 #include "math/Vector.h"
 
 enum CostFunction {

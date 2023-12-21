@@ -15,7 +15,13 @@ add_library(fastNN SHARED
         include/math/Vector.h
         include/model/activationFunction.h
         src/model/activationFunction.cpp
-        src/model/costFunction.cpp)
+        src/model/costFunction.cpp
+        include/model/Layer.h
+        src/model/DenseLayer.cpp
+        include/model/DenseLayer.h
+        src/model/OutputLayer.cpp
+        include/model/OutputLayer.h
+        include/model/weightInit.h)
 
 target_include_directories(fastNN PUBLIC ${INCLUDE_DIR})
 add_executable(test ${CMAKE_CURRENT_SOURCE_DIR}/test/test.cpp)
