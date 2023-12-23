@@ -35,6 +35,10 @@ public:
         return data[index];
     }
 
+    std::vector<float>& array() {
+        return data;
+    }
+
     /**
      * Element wise addition
      */

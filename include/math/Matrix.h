@@ -44,6 +44,10 @@ public:
         return this->height;
     }
 
+    std::vector<float>& array() {
+        return this->data;
+    }
+
     Matrix add(const Matrix& other) const;
 
     Matrix sub(const Matrix &o) const;

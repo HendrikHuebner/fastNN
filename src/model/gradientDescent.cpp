@@ -2,8 +2,7 @@
 // Created by hhuebner on 12/21/23.
 //
 
-#include <memory>
-#include "gradientDescent.h"
+#include "model/gradientDescent.h"
 #include "vector"
 #include "math/Vector.h"
 #include "model/Layer.h"
@@ -36,13 +35,13 @@ std::vector<Vector> calculateError(const std::vector<Layer*> layers, const Vecto
 }
 
 
-Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivation, const std::vector<Vector*>& errors) {
+Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivation, const std::vector<Vector>& errors) {
     auto matrix = new Matrix(prevActivation.size(), layer->getOutputSize());
-    const Vector* error = errors[index];
+    const Vector error = errors[index];
 
     for (int i = 0; i < matrix->getWidth(); i++) {
         for (int j = 0; j < matrix->getHeight(); j++) {
-            matrix->set(i, j, (*error)[j] * prevActivation[i]);
+            matrix->set(i, j, error[j] * prevActivation[i]);
         }
     }
 
@@ -57,7 +56,7 @@ Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivati
  * @param input
  * @return
  */
-std::vector<Matrix*> weightGradient(const std::vector<Vector*> errors, const std::vector<Layer*>& layers, const Vector& input) {
+std::vector<Matrix*> calcWeightGradient(const std::vector<Vector> errors, const std::vector<Layer*>& layers, const Vector& input) {
     std::vector<Matrix*> grad;
     grad.reserve(layers.size());
 

@@ -55,7 +55,7 @@ float applyCostFunction(CostFunction costFunction, const Vector& output, const V
     }
 }
 
-Vector computeDerivative(CostFunction costFunction, const Vector& output, const Vector& expected) {
+Vector applyCostDerivative(CostFunction costFunction, const Vector& output, const Vector& expected) {
     switch (costFunction) {
         case QUADRATIC:
             return nablaQuadratic(output, expected);

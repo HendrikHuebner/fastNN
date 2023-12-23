@@ -28,7 +28,7 @@ std::vector<Vector> calculateError(const std::vector<Layer*> layers, const Vecto
  * @param errors
  * @return Gradient Matrix
  */
-Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivation, const std::vector<Vector*>& errors);
+Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivation, const std::vector<Vector>& errors);
 
 
 /**
@@ -39,6 +39,6 @@ Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivati
  * @param input
  * @return
  */
-std::vector<Matrix*> weightGradient(const std::vector<Vector*> errors, const std::vector<Layer*>& layers, const Vector& input);
+std::vector<Matrix*> calcWeightGradient(const std::vector<Vector> errors, const std::vector<Layer*>& layers, const Vector& input);
 
 #endif //FASTNN_GRADIENTDESCENT_H

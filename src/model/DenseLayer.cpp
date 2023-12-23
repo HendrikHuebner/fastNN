@@ -19,8 +19,8 @@ void DenseLayer::init(std::mt19937 &rand) {
     }
 }
 
-Vector DenseLayer::calculateError(Layer* previous, const Vector nableCost) override {
-    return previous->nableCost.mul(applyDerivative(this->zValues, this->activationFunction));
+Vector DenseLayer::calculateError(Layer *previous, const Vector nableCost) {
+    return previous->getActivationVec().mul(nableCost.mul(applyDerivative(this->zValues, this->activationFunction)));
 }
 
 void DenseLayer::processInput(const Vector& inputs) {
@@ -34,3 +34,4 @@ void DenseLayer::processInput(const Vector& inputs) {
     this->zValues = activation;
     this->activationVec = apply(activation, this->activationFunction);
 }
+

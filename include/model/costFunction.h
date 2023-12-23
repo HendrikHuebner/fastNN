@@ -15,6 +15,6 @@ enum CostFunction {
 
 float applyCostFunction(CostFunction costFunction, const Vector& output, const Vector& expected);
 
-Vector computeDerivative(CostFunction costFunction, const Vector& output, const Vector& expected);
+Vector applyCostDerivative(CostFunction costFunction, const Vector& output, const Vector& expected);
 
 #endif //FASTNN_COSTFUNCTION_H

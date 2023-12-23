@@ -47,10 +47,6 @@ public:
 
     virtual Vector calculateError(Layer* previous, const Vector prevError) = 0;
 
-    //virtual std::vector<float> getParameters() const;
-
-    //virtual void setParameters(const std::vector<float>& floats);
-
     virtual ~Layer() = default;
 };
 

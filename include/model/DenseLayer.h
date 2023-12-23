@@ -38,11 +38,15 @@ public:
         return this->parameterCount;
     }
 
-    Vector calculateError(Layer* previous, const Vector nableCost);
+    Vector calculateError(Layer* previous, const Vector nableCost) override;
 
-    //virtual std::vector<float> getParameters() const;
+    Matrix* getWeights() {
+        return &this->weights;
+    }
 
-    //virtual void setParameters(const std::vector<float>& floats);
+    Vector getBiases() {
+        return this->biases;
+    }
 
     void processInput(const Vector& inputs) override;
 };
