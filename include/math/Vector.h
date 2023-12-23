@@ -15,6 +15,8 @@ private:
 
 public:
 
+    Vector() = default;
+
     Vector(size_t size, float init) {
         this->data = std::vector<float>(size, init);
     }

@@ -19,23 +19,18 @@ void DenseLayer::init(std::mt19937 &rand) {
     }
 }
 
-Vector DenseLayer::processInput(Vector inputs) {
+Vector DenseLayer::calculateError(Layer* previous, const Vector nableCost) override {
+    return previous->nableCost.mul(applyDerivative(this->zValues, this->activationFunction));
+}
 
-    if(inputs.size() != this->inputSize)
+void DenseLayer::processInput(const Vector& inputs) {
+
+    if (inputs.size() != this->inputSize)
         throw std::invalid_argument("DenseLayer received a greater amount of inputs than expected!");
 
 
     Vector activation = this->weights.mul(inputs).add(this->biases);
 
     this->zValues = activation;
-    this->aValues = apply(activation, this->activationFunction);
-    return this->aValues;
-
-std::vector<float> DenseLayer::getParameters() const {
-    return Layer::getParameters();
-}
-
-
-void DenseLayer::setParameters(const std::vector<float> &floats) {
-    Layer::setParameters(floats);
+    this->activationVec = apply(activation, this->activationFunction);
 }

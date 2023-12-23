@@ -11,43 +11,40 @@
 #include "math/Matrix.h"
 #include "weightInit.h"
 
-class DenseLayer : Layer {
-private:
+class DenseLayer : protected Layer {
 
+protected:
     const ActivationFunction activationFunction;
     const WeightInit weightInit;
-    const int inputSize;
-    const int outputSize;
     const int parameterCount;
 
     Matrix weights;
     Vector biases;
     Vector zValues;
-    Vector aValues;
 
 public:
     DenseLayer(const ActivationFunction activationFunction, const WeightInit weightInit, const int inputSize, const int outputSize):
+    Layer(inputSize, outputSize),
     activationFunction(activationFunction),
     weightInit(weightInit),
-    inputSize(inputSize),
-    outputSize(outputSize),
     parameterCount(outputSize + inputSize * outputSize),
     weights(inputSize, outputSize),
     biases(outputSize, 0.0f),
-    zValues(outputSize, 0.0f),
-    aValues(inputSize, 0.0f) {}
+    zValues(outputSize, 0.0f) {}
 
-    void init(std::mt19937 &rand);
+    void init(std::mt19937 &rand) override;
 
-    virtual int getParameterCount() const {
+    virtual int getParameterCount() const override {
         return this->parameterCount;
     }
 
-    virtual std::vector<float> getParameters() const;
+    Vector calculateError(Layer* previous, const Vector nableCost);
 
-    virtual void setParameters(const std::vector<float>& floats);
+    //virtual std::vector<float> getParameters() const;
 
-    Vector processInput(Vector inputs);
+    //virtual void setParameters(const std::vector<float>& floats);
+
+    void processInput(const Vector& inputs) override;
 };
 
 

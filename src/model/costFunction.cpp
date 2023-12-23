@@ -4,12 +4,8 @@
 
 #include <cmath>
 #include "math/Vector.h"
+#include "model/costFunction.h"
 
-enum CostFunction {
-    QUADRATIC,
-    CROSS_ENTROPY,
-    KULLBACK_LEIBLER
-};
 
 float quadratic(const Vector& output, const Vector& expected) {
     double sum = 0;

@@ -21,7 +21,14 @@ add_library(fastNN SHARED
         include/model/DenseLayer.h
         src/model/OutputLayer.cpp
         include/model/OutputLayer.h
-        include/model/weightInit.h)
+        include/model/weightInit.h
+        include/model/costFunction.h
+        include/model/GradientUpdater.h
+        include/model/updater/AdamGradientUpdater.h
+        src/model/updater/AdamGradientUpdater.cpp
+        include/model/updater/SGDGradientUpdater.h
+        src/model/gradientDescent.cpp
+        src/model/gradientDescent.h)
 
 target_include_directories(fastNN PUBLIC ${INCLUDE_DIR})
 add_executable(test ${CMAKE_CURRENT_SOURCE_DIR}/test/test.cpp)

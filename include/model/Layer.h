@@ -7,23 +7,49 @@
 
 
 #include <random>
+#include <memory>
 #include "math/Vector.h"
 
 class Layer {
+
+protected:
+    const int inputSize;
+    const int outputSize;
+    Vector activationVec;
+
 public:
-    Layer() {}
+    Layer(int inputSize, int outputSize) :
+    inputSize(inputSize), outputSize(outputSize), activationVec(outputSize, 0.0f) {}
 
-    virtual Vector processInput(const Vector& inputs) = 0;
+    virtual int getOutputSize() {
+        return this->outputSize;
+    }
 
+    /**
+     * Processes input from previous layer and updates activationVec
+     * @param inputs
+     */
+    virtual void processInput(const Vector& inputs) = 0;
+
+    /**
+     * Initializes layer
+     * @param rand
+     */
     virtual void init(std::mt19937& rand) = 0;
+
+    Vector getActivationVec() {
+        return this->activationVec;
+    }
 
     virtual int getParameterCount() const {
         return 0;
     }
 
-    virtual std::vector<float> getParameters() const;
+    virtual Vector calculateError(Layer* previous, const Vector prevError) = 0;
 
-    virtual void setParameters(const std::vector<float>& floats);
+    //virtual std::vector<float> getParameters() const;
+
+    //virtual void setParameters(const std::vector<float>& floats);
 
     virtual ~Layer() = default;
 };
