@@ -3,6 +3,7 @@
 //
 #include "model/activationFunction.h"
 #include <cmath>
+#include <stdexcept>
 
 
 inline Vector relu(Vector& vec) {
@@ -77,7 +78,10 @@ Vector apply(Vector &vector, ActivationFunction f) {
             return sigmoid(vector);
         case SOFTMAX:
             return softmax(vector);
-    };
+
+        default:
+            throw std::invalid_argument("Unknown Activation Function");
+    }
 }
 
 Vector applyDerivative(Vector& vector, ActivationFunction f) {
@@ -88,5 +92,8 @@ Vector applyDerivative(Vector& vector, ActivationFunction f) {
             return dSigmoid(vector);
         case SOFTMAX:
             return dSoftmax(vector);
-    };
+
+        default:
+            throw std::invalid_argument("Unknown Activation Function");
+    }
 }

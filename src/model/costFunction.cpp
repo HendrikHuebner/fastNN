@@ -3,6 +3,7 @@
 //
 
 #include <cmath>
+#include <stdexcept>
 #include "math/Vector.h"
 #include "model/costFunction.h"
 
@@ -52,6 +53,9 @@ float applyCostFunction(CostFunction costFunction, const Vector& output, const V
             return crossEntropy(output, expected);
         case KULLBACK_LEIBLER:
             return kullbackLeibler(output, expected);
+
+        default:
+            throw std::invalid_argument("Unknown Cost Function");
     }
 }
 
@@ -63,5 +67,8 @@ Vector applyCostDerivative(CostFunction costFunction, const Vector& output, cons
             return nablaCrossEntropy(output, expected);
         case KULLBACK_LEIBLER:
             return nablaKullbackLeibler(output, expected);
+
+        default:
+            throw std::invalid_argument("Unknown Cost Function");
     }
 }

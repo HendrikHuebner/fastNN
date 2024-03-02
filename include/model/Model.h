@@ -6,7 +6,14 @@
 #define FASTNN_MODEL_H
 
 
+#include <iostream>
+
+void hello() {
+    std::cout << "Hello from fastNN!" << std::endl;
+}
+
 class Model {
+public:
 
 };
 
@@ -17,7 +24,6 @@ enum InitializationFunction {
     ZEROS,
     ONES
 };
-
 
 
 
