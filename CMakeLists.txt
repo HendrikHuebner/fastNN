@@ -17,14 +17,14 @@ file(GLOB_RECURSE PYTHON_COMPAT "${CMAKE_CURRENT_SOURCE_DIR}/compat/*.cpp")
 pybind11_add_module(pyfastNN ${PYTHON_COMPAT} ${SOURCE_FILES} ${INCLUDE_FILES})
 target_include_directories(pyfastNN PUBLIC ${INCLUDE_DIR})
 
-add_custom_command(
-        TARGET pyfastNN
-        POST_BUILD
-        COMMAND ${Python_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/my_python_script.py"
-        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-)
+#add_custom_command(
+#        TARGET pyfastNN
+#        POST_BUILD
+#        COMMAND ${Python_EXECUTABLE} "pybind11-stubgen pyfastNN"
+#        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+#)
 
-add_custom_target(run_python_script DEPENDS pyfastNN)
+#add_custom_target(generate-stubs DEPENDS pyfastNN)
 
 
 # library
