@@ -9,35 +9,35 @@
 #include <vector>
 #include <cstdlib>
 
+template<class T>
 class Vector {
 
-private:
-    std::vector<float> data;
+protected:
+    T *data;
+     const u_int32_t size;
 
 public:
 
     Vector() = default;
 
-    Vector(size_t size, float init) {
-        this->data = std::vector<float>(size, init);
+    Vector(size_t size, T init) : size(size) {
+        this->data = new T[size];
+        std::fill_n(this->data, size, init);
     }
 
     Vector(const Vector& copy) : data(copy.data) {}
 
-    [[nodiscard]] size_t size() const {
-        return this->data.size();
-    }
 
     float& operator[](size_t index) {
         return data[index];
     }
 
-    float operator[](size_t index) const {
+    T operator[](size_t index) const {
         return data[index];
     }
 
-    std::vector<float>& array() {
-        return data;
+    std::vector<T>& toStdVector() {
+        return std::vector(data, data + this->size);
     }
 
     /**
@@ -62,7 +62,7 @@ public:
     Vector scale(float scalar) const;
 
 
-    float max();
+    T max();
 
 
     Vector clamp(float min, float max) const;

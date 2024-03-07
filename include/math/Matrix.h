@@ -7,62 +7,65 @@
 
 
 #include <vector>
+#include <cstdint>
 #include "Vector.h"
 
+template<class T>
 class Matrix {
+
 public:
-    Matrix(int width, int height) {
-        this->width = width;
-        this->height = height;
-
-        this->data = std::vector<float>(width * height);
+    Matrix(uint32_t width, uint32_t height) : width(width), height(height), size(width * height) {
+        this->data = new T[this->size];
     }
 
-    Matrix(const Matrix& copy) {
-        this->width = copy.width;
-        this->height = copy.height;
-        this->data = copy.data;
+    Matrix(const Matrix& copy) : width(copy.width), height(copy.height), size(copy.size), data(copy.data) {}
+
+    ~Matrix() {
+        delete[] this->data;
     }
 
-    float& operator[](size_t index) {
+    T& operator[](size_t index) {
         return data[index];
     }
 
-    float operator[](size_t index) const {
+    T operator[](size_t index) const {
         return data[index];
     }
 
-    void set(int x, int y, float f) {
+    void set(int x, int y, T f) {
         this->data[x + y * this->width] = f;
     }
 
-    int getWidth() const {
+    uint32_t getWidth() const {
         return this->width;
     }
 
-    int getHeight() const {
+    uint32_t getHeight() const {
         return this->height;
     }
 
-    std::vector<float>& array() {
-        return this->data;
+    uint64_t getSize() const {
+        return this->size;
     }
 
-    Matrix add(const Matrix& other) const;
+    std::vector<T>& asVector() {
+        return std::vector(this->data, this->data + this->size);
+    }
 
-    Matrix sub(const Matrix &o) const;
+    virtual Matrix<T> add(const Matrix<T>& other) const;
 
-    Matrix mul(const Matrix& other) const;
+    virtual Matrix<T> sub(const Matrix<T> &o) const;
 
-    Vector mul(const Vector &o) const;
+    virtual Matrix<T> mul(const Matrix<T>& other) const;
 
-    Matrix transpose() const;
+    virtual Vector mul(const Vector &o) const;
 
+    virtual Matrix<T> transpose() const;
 
-private:
-    int width;
-    int height;
-    std::vector<float> data;
+    const uint64_t size;
+    T *data;
+    const uint32_t height;
+    const uint32_t width;
 };
 
 
