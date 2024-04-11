@@ -1,0 +1,2 @@
+import pyfastNN
+pyfastNN.hello()

@@ -7,25 +7,23 @@
 
 
 #include <vector>
+#include <cstdlib>
 
 class Vector {
 
-private:
-    std::vector<float> data;
+protected:
+    float *data;
+    const u_int32_t size;
 
 public:
 
-    Vector() = default;
-
-    Vector(size_t size, float init) {
-        this->data = std::vector<float>(size, init);
+    Vector(size_t size, float init) : size(size) {
+        this->data = new float[size];
+        std::fill_n(this->data, size, init);
     }
 
-    Vector(const Vector& copy) : data(copy.data) {}
+    Vector(const Vector& copy) : data(copy.data), size(copy.size) {}
 
-    [[nodiscard]] size_t size() const {
-        return this->data.size();
-    }
 
     float& operator[](size_t index) {
         return data[index];
@@ -35,8 +33,8 @@ public:
         return data[index];
     }
 
-    std::vector<float>& array() {
-        return data;
+    std::vector<float> toStdVector() {
+        return std::vector(data, data + this->size);
     }
 
     /**
