@@ -28,7 +28,9 @@ add_library(fastNN SHARED
         src/model/updater/AdamGradientUpdater.cpp
         include/model/updater/SGDGradientUpdater.h
         src/model/gradientDescent.cpp
-        src/model/gradientDescent.h)
+        include/model/gradientDescent.h
+        include/util/DataSet.h
+        src/util/DataSet.cpp)
 
 target_include_directories(fastNN PUBLIC ${INCLUDE_DIR})
 add_executable(test ${CMAKE_CURRENT_SOURCE_DIR}/test/test.cpp)

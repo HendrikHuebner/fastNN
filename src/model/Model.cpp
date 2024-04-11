@@ -31,8 +31,7 @@ public:
 
         this->gradientUpdater->init(this->parameterCount);
     }
-
-
+    
 
     /**
      * Recursively feeds data through neural network

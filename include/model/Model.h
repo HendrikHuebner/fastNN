@@ -6,6 +6,8 @@
 #define FASTNN_MODEL_H
 
 
+#include "math/Vector.h"
+
 class Model {
 
 };
@@ -18,6 +20,8 @@ enum InitializationFunction {
     ONES
 };
 
+
+Vector propagateData(const Vector data, const int layerIndex);
 
 
 
