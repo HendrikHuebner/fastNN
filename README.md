@@ -1,9 +1,9 @@
-# Neutal Network library written in C++
+# Neural Network library written in C++
 
 Work in progress, hopefully there will be time to contiue this project during the winter break
 
 
-## Installation notes:
+## Build process and dependencies:
 
 1. install the pybind11 library
 
@@ -15,7 +15,8 @@ Work in progress, hopefully there will be time to contiue this project during th
     ``pip3 install pybind11 pybind11-stubgen``
 
 
-3. Run cmake
+3. Generate build files using cmake. e. g.:
+    ``cmake -B ./build -G Ninja``
 
 
 ## math library
