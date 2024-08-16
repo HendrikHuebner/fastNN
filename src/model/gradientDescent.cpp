@@ -8,9 +8,9 @@
 #include "model/Layer.h"
 #include "math/Matrix.h"
 
-std::vector<Vector> calculateError(const std::vector<Layer*> layers, const Vector& nablaCost) {
+std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers, const Vector<float>& nablaCost) {
 
-    std::vector<Vector> errors;
+    std::vector<Vector<float>> errors;
 
     // Last layer
     int index = layers.size() - 1;
@@ -35,8 +35,8 @@ std::vector<Vector> calculateError(const std::vector<Layer*> layers, const Vecto
 }
 
 
-Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivation, const std::vector<Vector>& errors) {
-    auto matrix = new Matrix(prevActivation.size(), layer->getOutputSize());
+Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>& prevActivation, const std::vector<Vector<float>>& errors) {
+    auto matrix = new Matrix<float>(prevActivation.length(), layer->getOutputSize());
     const Vector error = errors[index];
 
     for (int i = 0; i < matrix->getWidth(); i++) {
@@ -56,18 +56,15 @@ Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivati
  * @param input
  * @return
  */
-std::vector<Matrix*> calcWeightGradient(const std::vector<Vector> errors, const std::vector<Layer*>& layers, const Vector& input) {
-    std::vector<Matrix*> grad;
+std::vector<Matrix<float>*> calcWeightGradient(const std::vector<Vector<float>> errors, const std::vector<Layer*>& layers, const Vector<float>& input) {
+    std::vector<Matrix<float>*> grad;
     grad.reserve(layers.size());
 
-    Vector previousActivation = input;
 
     for (size_t i = 0; i < layers.size(); i++) {
-        Layer* layer = layers[i];
-        Matrix* gradient = calcWeightGradientAt(layer, i, previousActivation, errors);
+        Vector<float> previousActivation = (i = 0) ? input : layers[i - 1]->getActivationVec();
+        Matrix<float>* gradient = calcWeightGradientAt(layers[i], i, previousActivation, errors);
         grad[i] = gradient;
-
-        previousActivation = layer->getActivationVec();
     }
 
     return grad;

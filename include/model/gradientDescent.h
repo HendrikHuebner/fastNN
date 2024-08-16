@@ -17,7 +17,7 @@
  * @param nablaCost
  * @return array of error vectors
  */
-std::vector<Vector> calculateError(const std::vector<Layer*> layers, const Vector& nablaCost);
+std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers, const Vector<float>& nablaCost);
 
 
 /**
@@ -28,7 +28,7 @@ std::vector<Vector> calculateError(const std::vector<Layer*> layers, const Vecto
  * @param errors
  * @return Gradient Matrix
  */
-Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivation, const std::vector<Vector>& errors);
+Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>& prevActivation, const std::vector<Vector<float>>& errors);
 
 
 /**
@@ -39,6 +39,6 @@ Matrix* calcWeightGradientAt(Layer* layer, int index, const Vector& prevActivati
  * @param input
  * @return
  */
-std::vector<Matrix*> calcWeightGradient(const std::vector<Vector> errors, const std::vector<Layer*>& layers, const Vector& input);
+std::vector<Matrix<float>*> calcWeightGradient(const std::vector<Vector<float>> errors, const std::vector<Layer*>& layers, const Vector<float>& input);
 
 #endif //FASTNN_GRADIENTDESCENT_H

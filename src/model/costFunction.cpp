@@ -8,44 +8,44 @@
 #include "model/costFunction.h"
 
 
-float quadratic(const Vector& output, const Vector& expected) {
+float quadratic(const Vector<float>& output, const Vector<float>& expected) {
     double sum = 0;
-    for (size_t i = 0; i < output.size(); i++) {
+    for (size_t i = 0; i < output.length(); i++) {
         sum += std::pow(expected[i] - output[i], 2);
     }
 
     return static_cast<float>(sum) / 2;
 }
 
-Vector nablaQuadratic(const Vector& output, const Vector& expected) {
+Vector<float> nablaQuadratic(const Vector<float>& output, const Vector<float>& expected) {
     return output.sub(expected);
 }
 
-float kullbackLeibler(const Vector& output, const Vector& expected) {
+float kullbackLeibler(const Vector<float>& output, const Vector<float>& expected) {
     double sum = 0;
-    for (size_t i = 0; i < output.size(); i++) {
+    for (size_t i = 0; i < output.length(); i++) {
         sum += expected[i] * std::log(expected[i] / output[i]);
     }
     return static_cast<float>(sum) / 2;
 }
 
-Vector nablaKullbackLeibler(const Vector& output, const Vector& expected) {
+Vector<float> nablaKullbackLeibler(const Vector<float>& output, const Vector<float>& expected) {
     return expected.div(output).scale(-1.0);
 }
 
-float crossEntropy(const Vector& output, const Vector& expected) {
+float crossEntropy(const Vector<float>& output, const Vector<float>& expected) {
     double sum = 0;
-    for (size_t i = 0; i < output.size(); i++) {
+    for (size_t i = 0; i < output.length(); i++) {
         sum -= expected[i] * std::log(output[i]) + (1 - expected[i]) * std::log(1 - output[i]);
     }
     return static_cast<float>(sum);
 }
 
-Vector nablaCrossEntropy(const Vector& output, const Vector& expected) {
+Vector<float> nablaCrossEntropy(const Vector<float>& output, const Vector<float>& expected) {
     return output.sub(expected).div(output.sub(output.mul(output)).clamp(0.000001F, 100000.0F));
 }
 
-float applyCostFunction(CostFunction costFunction, const Vector& output, const Vector& expected) {
+float applyCostFunction(CostFunction costFunction, const Vector<float>& output, const Vector<float>& expected) {
     switch (costFunction) {
         case QUADRATIC:
             return quadratic(output, expected);
@@ -59,7 +59,7 @@ float applyCostFunction(CostFunction costFunction, const Vector& output, const V
     }
 }
 
-Vector applyCostDerivative(CostFunction costFunction, const Vector& output, const Vector& expected) {
+Vector<float> applyCostDerivative(CostFunction costFunction, const Vector<float>& output, const Vector<float>& expected) {
     switch (costFunction) {
         case QUADRATIC:
             return nablaQuadratic(output, expected);

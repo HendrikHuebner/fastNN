@@ -6,14 +6,17 @@
 #define FASTNN_VECTOR_H
 
 
+#include <cstddef>
 #include <vector>
-#include <cstdlib>
+#include <stdint.h>
+#include "util/helpers.h"
 
+template <typename T, typename = enable_if_float<T>>
 class Vector {
 
-protected:
+private:
     float *data;
-    const u_int32_t size;
+    size_t size;
 
 public:
 
@@ -23,7 +26,12 @@ public:
     }
 
     Vector(const Vector& copy) : data(copy.data), size(copy.size) {}
+    
+    ~Vector() { delete[] data; }
 
+    size_t length() const {
+        return this->size;
+    }
 
     float& operator[](size_t index) {
         return data[index];

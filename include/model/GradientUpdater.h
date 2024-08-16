@@ -5,6 +5,8 @@
 #ifndef FASTNN_GRADIENTUPDATER_H
 #define FASTNN_GRADIENTUPDATER_H
 
+#include <vector>
+
 class GradientUpdater {
 
 public:

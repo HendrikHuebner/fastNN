@@ -6,10 +6,10 @@
 #include <stdexcept>
 
 
-inline Vector relu(Vector& vec) {
-    Vector out = Vector(vec.size(), 0.0f);
+inline Vector<float> relu(Vector<float>& vec) {
+    Vector<float> out = Vector<float>(vec.length(), 0.0f);
 
-    for(int i = 0; i < vec.size(); i++) {
+    for(int i = 0; i < vec.length(); i++) {
         if(vec[i] > 0) {
             out[i] = vec[i];
         }
@@ -18,10 +18,10 @@ inline Vector relu(Vector& vec) {
     return out;
 }
 
-inline Vector dRelu(Vector& vec) {
-    Vector out = Vector(vec.size(), 0.0f);
+inline Vector<float> dRelu(Vector<float>& vec) {
+    Vector<float> out = Vector<float>(vec.length(), 0.0f);
 
-    for(int i = 0; i < vec.size(); i++) {
+    for(int i = 0; i < vec.length(); i++) {
 
         if(vec[i] > 0) {
             out[i] = 1;
@@ -31,46 +31,44 @@ inline Vector dRelu(Vector& vec) {
     return out;
 }
 
-inline Vector sigmoid(Vector& vec) {
-    Vector out = Vector(vec.size(), 0);
+inline Vector<float> sigmoid(Vector<float>& vec) {
+    Vector<float> out = Vector<float>(vec.length(), 0);
 
-    for(int i = 0; i < vec.size(); i++) {
+    for(int i = 0; i < vec.length(); i++) {
         out[i] = (float) (1/(1 + std::exp(-vec[i])));
     }
 
     return out;
 }
 
-inline Vector dSigmoid(Vector& vec) {
-    Vector out = sigmoid(vec);
+inline Vector<float> dSigmoid(Vector<float>& vec) {
+    Vector<float> out = sigmoid(vec);
 
-    Vector result = Vector(vec.size(), 1.0F);
+    Vector<float> result = Vector<float>(vec.length(), 1.0F);
     return out.mul(result).sub(out);
 }
 
-inline Vector softmax(Vector& vec) {
-    Vector out = Vector(vec.size(), 0.0f);
+inline Vector<float> softmax(Vector<float>& vec) {
+    Vector<float> out = Vector<float>(vec.length(), 0.0f);
     float max = vec.max();
     double divisor = 0;
 
-    for(int i = 0; i < vec.size(); i++) {
+    for(int i = 0; i < vec.length(); i++) {
         out[i] = (float) std::exp(vec[i] - max);
         divisor += out[i];
     }
 
-    out = out.scale( 1.0 / divisor);
-
-    return out;
+    return out.scale( 1.0 / divisor);
 }
 
-inline Vector dSoftmax(Vector& vec) {
-    Vector out = softmax(vec);
+inline Vector<float> dSoftmax(Vector<float>& vec) {
+    Vector<float> out = softmax(vec);
 
-    Vector result = Vector(vec.size(), 1.0F).sub(out);
+    Vector<float> result = Vector<float>(vec.length(), 1.0F).sub(out);
     return out.mul(result);
 }
 
-Vector apply(Vector &vector, ActivationFunction f) {
+Vector<float> apply(Vector<float> &vector, ActivationFunction f) {
     switch (f) {
         case RELU:
             return relu(vector);
@@ -84,7 +82,7 @@ Vector apply(Vector &vector, ActivationFunction f) {
     }
 }
 
-Vector applyDerivative(Vector& vector, ActivationFunction f) {
+Vector<float> applyDerivative(Vector<float>& vector, ActivationFunction f) {
     switch (f) {
         case RELU:
             return dRelu(vector);

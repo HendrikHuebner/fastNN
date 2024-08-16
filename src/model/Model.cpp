@@ -3,6 +3,9 @@
 //
 
 #include "model/Model.h"
+#include "math/Matrix.h"
+#include "model/DenseLayer.h"
+#include "model/gradientDescent.h"
 
 
 void Model::init() {
@@ -14,8 +17,14 @@ void Model::init() {
     this->gradientUpdater->init(this->parameterCount);
 }
 
-
-Vector Model::propagateData(const Vector data, const int layerIndex) {
+/**
+* Recursively feeds data through neural network
+*
+* @param data
+* @param layerIndex
+* @return network output
+*/
+Vector<float> Model::propagateData(const Vector<float> data, const int layerIndex) {
     if(layerIndex >= this->layers.size()) {
         return data;
     } else {
@@ -23,50 +32,34 @@ Vector Model::propagateData(const Vector data, const int layerIndex) {
         return propagateData(this->layers[layerIndex]->getActivationVec(), layerIndex + 1);
     }
 }
-    /**
-     * Recursively feeds data through neural network
-     *
-     * @param data
-     * @param layerIndex
-     * @return network output
-     */
-    Vector propagateData(const Vector data, const int layerIndex) {
-        if(layerIndex >= this->layers.size()) {
-            return data;
-        } else {
-            this->layers[layerIndex]->processInput(data);
-            return propagateData(this->layers[layerIndex]->getActivationVec(), layerIndex + 1);
-        }
-    }
 
-float Model::determineCost(Vector networkOutput, Vector expected) {
+float Model::determineCost(Vector<float> networkOutput, Vector<float> expected) {
     return applyCostFunction(this->cost, networkOutput, expected);
 }
 
-void Model::updateParameters(Vector input, Vector output, Vector expected) {
-    Vector nablaCost = applyCostDerivative(this->cost, output, expected);
+void Model::updateParameters(Vector<float> input, Vector<float> output, Vector<float> expected) {
+    Vector<float> nablaCost = applyCostDerivative(this->cost, output, expected);
 
-    std::vector<Vector> error = calculateError(this->layers, nablaCost);
-    std::vector<Vector> biasGradient = error;
-    std::vector<Matrix*> weightGradient = calcWeightGradient(error, this->layers, input);
+    std::vector<Vector<float>> error = calculateError(this->layers, nablaCost);
+    std::vector<Vector<float>> biasGradient = error;
+    std::vector<Matrix<float>*> weightGradient = calcWeightGradient(error, this->layers, input);
 
     for(int i = 0; i < this->layers.size(); i++) {
         Layer* layer = this->layers[i];
 
         if (DenseLayer* dense = dynamic_cast<DenseLayer*>(layer)) {
-            std::vector<float>& weights = dense->getWeights()->array();
-            std::vector<float>& biases = dense->getBiases().array();
+            std::vector<float> weights = dense->getWeights()->toStdVector();
+            std::vector<float> biases = dense->getBiases().toStdVector();
 
-            this->gradientUpdater->applyUpdater(weights, weightGradient[i]->array());
-            this->gradientUpdater->applyUpdater(biases, biasGradient[i].array());
+            this->gradientUpdater->applyUpdater(weights, weightGradient[i]->toStdVector());
+            this->gradientUpdater->applyUpdater(biases, biasGradient[i].toStdVector());
         }
     }
 }
 
-void train(Model model, const std::vector<Vector> features, const std::vector<Vector> labels) {
+void train(Model model, const std::vector<Vector<float>> features, const std::vector<Vector<float>> labels) {
     for(int i = 0; i < features.size(); i++ ) {
-        Vector output = model.propagateData(features[i], 0);
+        Vector<float> output = model.propagateData(features[i], 0);
 
     }
-
 }

@@ -5,12 +5,13 @@
 #ifndef FASTNN_MODEL_H
 #define FASTNN_MODEL_H
 
+#pragma once
 
+#include "model/Layer.h"
 #include "model/costFunction.h"
 #include "model/GradientUpdater.h"
-#include "model/gradientDescent.h"
-#include "model/DenseLayer.h"
-#include <iostream>
+#include <memory>
+#include <random>
 
 
 class Model {
@@ -32,12 +33,12 @@ public:
      * @param layerIndex
      * @return network output
      */
-    Vector propagateData(const Vector data, const int layerIndex);
+    Vector<float> propagateData(const Vector<float> data, const int layerIndex);
 
     /**
      * Uses gradient descent and backpropagation to update the weights and biases in this network.
      */
-    void updateParameters(Vector input, Vector output, Vector expected);
+    void updateParameters(Vector<float> input, Vector<float> output, Vector<float> expected);
 
     /**
      * Calculates the cost from the expected output and the observed output
@@ -46,10 +47,7 @@ public:
      * @param expected
      * @return cost value
      */
-    float determineCost(Vector networkOutput, Vector expected);
-
-Vector propagateData(const Vector data, const int layerIndex);
-
+    float determineCost(Vector<float> networkOutput, Vector<float> expected);
 
 };
 

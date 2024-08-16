@@ -9,9 +9,16 @@
 #include <vector>
 #include <cstdint>
 #include "Vector.h"
+#include "util/helpers.h"
 
-template<class T>
+template<typename T, typename = enable_if_float<T>>
 class Matrix {
+
+public:
+    T *data;
+    const uint64_t size;
+    const uint32_t height;
+    const uint32_t width;
 
 public:
     Matrix(uint32_t width, uint32_t height) : width(width), height(height), size(width * height) {
@@ -20,9 +27,7 @@ public:
 
     Matrix(const Matrix& copy) : width(copy.width), height(copy.height), size(copy.size), data(copy.data) {}
 
-    ~Matrix() {
-        delete[] this->data;
-    }
+    ~Matrix() { delete[] data; }
 
     T& operator[](size_t index) {
         return data[index];
@@ -48,7 +53,11 @@ public:
         return this->size;
     }
 
-    std::vector<T>& asVector() {
+    T* getData() {
+        return data;
+    }
+
+    std::vector<T> toStdVector() {
         return std::vector(this->data, this->data + this->size);
     }
 
@@ -58,14 +67,9 @@ public:
 
     virtual Matrix<T> mul(const Matrix<T>& other) const;
 
-    virtual Vector mul(const Vector &o) const;
+    virtual Vector<T> mul(const Vector<T> &o) const;
 
     virtual Matrix<T> transpose() const;
-
-    const uint64_t size;
-    T *data;
-    const uint32_t height;
-    const uint32_t width;
 };
 
 

@@ -18,9 +18,9 @@ protected:
     const WeightInit weightInit;
     const int parameterCount;
 
-    Matrix weights;
-    Vector biases;
-    Vector zValues;
+    Matrix<float> weights;
+    Vector<float> biases;
+    Vector<float> zValues;
 
 public:
     DenseLayer(const ActivationFunction activationFunction, const WeightInit weightInit, const int inputSize, const int outputSize):
@@ -38,17 +38,17 @@ public:
         return this->parameterCount;
     }
 
-    Vector calculateError(Layer* previous, const Vector nableCost) override;
+    Vector<float> calculateError(Layer* previous, const Vector<float> nableCost) override;
 
-    Matrix* getWeights() {
+    Matrix<float>* getWeights() {
         return &this->weights;
     }
 
-    Vector getBiases() {
+    Vector<float> getBiases() {
         return this->biases;
     }
 
-    void processInput(const Vector& inputs) override;
+    void processInput(const Vector<float>& inputs) override;
 };
 
 

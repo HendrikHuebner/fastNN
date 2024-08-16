@@ -5,76 +5,81 @@
 #include <limits>
 #include "math/Vector.h"
 
-Vector Vector::add(const Vector &other) const {
+template<>
+Vector<float> Vector<float>::add(const Vector<float> &other) const {
 
     Vector result(other);
 
-    for (int i = 0; i < this->data.size(); i++) {
+    for (int i = 0; i < this->length(); i++) {
         result.data[i] += this->data[i];
     }
 
     return result;
 }
 
-Vector Vector::sub(const Vector &other) const {
+template<>
+Vector<float> Vector<float>::sub(const Vector<float> &other) const {
 
-    Vector result(other);
+    Vector<float> result(other);
 
-    for (int i = 0; i < this->data.size(); i++) {
+    for (int i = 0; i < this->length(); i++) {
         result.data[i] -= this->data[i];
     }
 
     return result;
 }
 
+template<>
+Vector<float> Vector<float>::mul(const Vector<float> &other) const {
+    Vector<float> result(other);
 
-Vector Vector::mul(const Vector &other) const {
-    Vector result(other);
-
-    for (int i = 0; i < this->data.size(); i++) {
+    for (int i = 0; i < this->length(); i++) {
         result.data[i] *= this->data[i];
     }
 
     return result;
 }
 
+template<>
+Vector<float> Vector<float>::div(const Vector<float> &other) const {
+    Vector<float> result(other);
 
-Vector Vector::div(const Vector &other) const {
-    Vector result(other);
-
-    for (int i = 0; i < this->data.size(); i++) {
+    for (int i = 0; i < this->length(); i++) {
         result.data[i] /= this->data[i];
     }
 
     return result;
 }
 
-Vector Vector::scale(float scalar) const {
-    Vector result(*this);
+template<>
+Vector<float> Vector<float>::scale(float scalar) const {
+    Vector<float> result(*this);
 
-    for (int i = 0; i < this->data.size(); i++) {
+    for (int i = 0; i < this->length(); i++) {
         result.data[i] *= scalar;
     }
 
     return result;
 }
 
-float Vector::max() {
+template<>
+float Vector<float>::max() {
     float max = -std::numeric_limits<float>::infinity();
 
-    for (float f : this->data) {
-        if (f > max) {
-            max = f;
+    for (int i = 0; i < this->length(); i++) {
+        if (this->data[i] > max) {
+            max = this->data[i];
         }
     }
 
     return max;
 }
 
-Vector Vector::clamp(float min, float max) const {
-    Vector result(*this);
+template<>
+Vector<float> Vector<float>::clamp(float min, float max) const {
+    Vector<float> result(*this);
 
-    for (int i = 0; i < this->data.size(); i++) {
+    for (int i = 0; i < this->length(); i++) {
         if(result[i] > max) {
             result[i] = max;
         } else if(result[i] < min) {

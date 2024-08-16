@@ -14,18 +14,18 @@ void DenseLayer::init(std::mt19937 &rand) {
         }
     }
 
-    for(int i = 0; i < this->biases.size(); i++) {
+    for(int i = 0; i < this->biases.length(); i++) {
         this->biases[i] = initializeWeight(this->weightInit, rand, this->inputSize);
     }
 }
 
-Vector DenseLayer::calculateError(Layer *previous, const Vector nableCost) {
+Vector<float> DenseLayer::calculateError(Layer *previous, const Vector<float> nableCost) {
     return previous->getActivationVec().mul(nableCost.mul(applyDerivative(this->zValues, this->activationFunction)));
 }
 
-void DenseLayer::processInput(const Vector& inputs) {
+void DenseLayer::processInput(const Vector<float>& inputs) {
 
-    if (inputs.size() != this->inputSize)
+    if (inputs.length() != this->inputSize)
         throw std::invalid_argument("DenseLayer received a greater amount of inputs than expected!");
 
 

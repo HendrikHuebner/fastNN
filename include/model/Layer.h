@@ -15,7 +15,7 @@ class Layer {
 protected:
     const int inputSize;
     const int outputSize;
-    Vector activationVec;
+    Vector<float> activationVec;
 
 public:
     Layer(int inputSize, int outputSize) :
@@ -29,7 +29,7 @@ public:
      * Processes input from previous layer and updates activationVec
      * @param inputs
      */
-    virtual void processInput(const Vector& inputs) = 0;
+    virtual void processInput(const Vector<float>& inputs) = 0;
 
     /**
      * Initializes layer
@@ -37,7 +37,7 @@ public:
      */
     virtual void init(std::mt19937& rand) = 0;
 
-    Vector getActivationVec() {
+    Vector<float> getActivationVec() const {
         return this->activationVec;
     }
 
@@ -45,7 +45,7 @@ public:
         return 0;
     }
 
-    virtual Vector calculateError(Layer* previous, const Vector prevError) = 0;
+    virtual Vector<float> calculateError(Layer* previous, const Vector<float> prevError) = 0;
 
     virtual ~Layer() = default;
 };

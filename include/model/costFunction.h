@@ -13,8 +13,8 @@ enum CostFunction {
     KULLBACK_LEIBLER
 };
 
-float applyCostFunction(CostFunction costFunction, const Vector& output, const Vector& expected);
+float applyCostFunction(CostFunction costFunction, const Vector<float>& output, const Vector<float>& expected);
 
-Vector applyCostDerivative(CostFunction costFunction, const Vector& output, const Vector& expected);
+Vector<float> applyCostDerivative(CostFunction costFunction, const Vector<float>& output, const Vector<float>& expected);
 
 #endif //FASTNN_COSTFUNCTION_H
