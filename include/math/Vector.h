@@ -15,13 +15,13 @@ template <typename T, typename = enable_if_float<T>>
 class Vector {
 
 private:
-    float *data;
+    T *data;
     size_t size;
 
 public:
 
-    Vector(size_t size, float init) : size(size) {
-        this->data = new float[size];
+    Vector(size_t size, T init) : size(size) {
+        this->data = new T[size];
         std::fill_n(this->data, size, init);
     }
 
@@ -33,15 +33,15 @@ public:
         return this->size;
     }
 
-    float& operator[](size_t index) {
+    T& operator[](size_t index) {
         return data[index];
     }
 
-    float operator[](size_t index) const {
+    T operator[](size_t index) const {
         return data[index];
     }
-
-    std::vector<float> toStdVector() {
+ 
+    std::vector<T> toStdVector() {
         return std::vector(data, data + this->size);
     }
 
@@ -64,13 +64,13 @@ public:
     /**
      * Scalar multiplication
      */
-    Vector scale(float scalar) const;
+    Vector scale(T scalar) const;
 
 
-    float max();
+    T max();
 
 
-    Vector clamp(float min, float max) const;
+    Vector clamp(T min, T max) const;
 };
 
 
