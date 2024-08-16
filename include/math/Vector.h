@@ -1,10 +1,4 @@
-//
-// Created by hhuebner on 12/20/23.
-//
-
-#ifndef FASTNN_VECTOR_H
-#define FASTNN_VECTOR_H
-
+#pragma once
 
 #include <cstddef>
 #include <vector>
@@ -41,37 +35,72 @@ public:
         return data[index];
     }
  
-    std::vector<T> toStdVector() {
+    std::vector<T> toStdVector() const {
         return std::vector(data, data + this->size);
     }
 
-    /**
-     * Element wise addition
-     */
-    Vector add(const Vector& other) const;
+    void add(Vector<T> &result, const Vector& other) const {
+        for (int i = 0; i < this->length(); i++) {
+            result.data[i] += this->data[i];
+        }
+    }
 
-    Vector sub(const Vector& other) const;
-
+    void sub(Vector<T> &result, const Vector& other) const {
+        for (int i = 0; i < this->length(); i++) {
+            result.data[i] -= this->data[i];
+        }
+    }
 
     /**
      * Element wise multiplication
      */
-    Vector mul(const Vector& other) const;
+    void mul(Vector<T> &result, const Vector& other) const {
+        for (int i = 0; i < this->length(); i++) {
+            result.data[i] *= this->data[i];
+        }
+    }
 
-    Vector div(const Vector& other) const;
+    void mul(Vector<T> &result, T scalar) const {
+        for (int i = 0; i < this->length(); i++) {
+            result.data[i] = this->data[i] * scalar;
+        }
+    }
 
+    T dot(const Vector& other) const {
+        T sum(0.0);
+        for (int i = 0; i < this->length(); i++) {
+            sum += this[i] * other[i];
+        }
 
-    /**
-     * Scalar multiplication
-     */
-    Vector scale(T scalar) const;
-
+        return sum;
+    }
 
     T max();
 
+    void clamp(Vector<T> &result, T min, T max) const;
 
-    Vector clamp(T min, T max) const;
+    Vector<T> operator+(const Vector<T>& other) const {
+        Vector<T> result(this->size);
+        this->add( result, other);
+        return result;
+    }
+
+    Vector<T> operator-(const Vector<T>& other) const {
+        Vector<T> result(this->size);
+        this->sub( result, other);
+        return result;
+    }
+
+    Vector<T> operator*(const Vector<T>& other) const {
+        Vector<T> result(this->size);
+        this->mul( result, other);
+        return result;
+    }
+
+    Vector<T> operator*(const T other) const {
+        Vector<T> result(this->size);
+        this->mul( result, other);
+        return result;
+    }
+
 };
-
-
-#endif //FASTNN_VECTOR_H

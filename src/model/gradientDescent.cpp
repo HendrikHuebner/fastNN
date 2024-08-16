@@ -1,6 +1,7 @@
 //
 // Created by hhuebner on 12/21/23.
 //
+#pragma once
 
 #include "model/gradientDescent.h"
 #include "vector"

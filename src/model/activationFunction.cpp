@@ -58,7 +58,7 @@ inline Vector<float> softmax(Vector<float>& vec) {
         divisor += out[i];
     }
 
-    return out.scale( 1.0 / divisor);
+    return out.mul(1.0 / divisor);
 }
 
 inline Vector<float> dSoftmax(Vector<float>& vec) {

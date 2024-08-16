@@ -30,7 +30,7 @@ float kullbackLeibler(const Vector<float>& output, const Vector<float>& expected
 }
 
 Vector<float> nablaKullbackLeibler(const Vector<float>& output, const Vector<float>& expected) {
-    return expected.div(output).scale(-1.0);
+    return expected.div(output).mul(-1.0);
 }
 
 float crossEntropy(const Vector<float>& output, const Vector<float>& expected) {

@@ -29,7 +29,7 @@ void DenseLayer::processInput(const Vector<float>& inputs) {
         throw std::invalid_argument("DenseLayer received a greater amount of inputs than expected!");
 
 
-    Vector activation = this->weights.mul(inputs).add(this->biases);
+    Vector activation = this->weights * inputs + this->biases;
 
     this->zValues = activation;
     this->activationVec = apply(activation, this->activationFunction);

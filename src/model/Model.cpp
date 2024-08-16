@@ -1,6 +1,7 @@
 //
 // Created by hhuebner on 12/19/23.
 //
+#pragma once
 
 #include "model/Model.h"
 #include "math/Matrix.h"
