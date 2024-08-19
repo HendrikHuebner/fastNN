@@ -48,7 +48,7 @@ endif()
 if (PYTHON_STUBS)
     # file(GLOB_RECURSE PYTHON_COMPAT "${CMAKE_CURRENT_SOURCE_DIR}/compat/*.cpp")
 
-    # require pybind11
+    # requires pybind11
     find_package(Python COMPONENTS Interpreter Development REQUIRED)
     find_package(pybind11 REQUIRED)
     include_directories(${pybind11_INCLUDE_DIRS})
@@ -70,9 +70,33 @@ endif()
 
 # unit tests
 if (BUILD_TESTS)
-    add_executable(test)
-    add_subdirectory(test)
-    target_link_libraries(test PRIVATE fastNN)
-
     message(">> Building Unit tests.")
+    
+    include(FetchContent)
+
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    )
+
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+
+    enable_testing()
+
+    add_executable(
+        hello_test
+        ${PROJECT_SOURCE_DIR}/test/src/test.cpp
+    )
+
+    target_link_libraries(
+        hello_test
+        GTest::gtest_main
+        fastNN
+    )
+
+    include(GoogleTest)
+    gtest_discover_tests(hello_test)
+    
 endif()

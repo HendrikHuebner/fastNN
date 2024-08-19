@@ -2,8 +2,8 @@
 // Created by hhuebner on 12/21/23.
 //
 
-#include <complex>
 #include "model/updater/AdamGradientUpdater.h"
+#include <cmath>
 
 void AdamGradientUpdater::applyUpdater(std::vector<float> &parameters, const std::vector<float> &gradient) {
     for (size_t i = 0; i < parameters.size(); i++) {

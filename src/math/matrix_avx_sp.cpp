@@ -1,5 +1,3 @@
-#pragma once
-
 #ifdef __AVX512__
 
 #include <immintrin.h>

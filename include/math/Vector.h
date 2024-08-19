@@ -14,11 +14,17 @@ private:
 
 public:
 
+
     Vector(size_t size, T init) : size(size) {
         this->data = new T[size];
         std::fill_n(this->data, size, init);
     }
 
+    Vector(size_t size) : size(size) {
+        this->data = new T[size];
+        std::fill_n(this->data, size, 0);
+    }
+    
     Vector(const Vector& copy) : data(copy.data), size(copy.size) {}
     
     ~Vector() { delete[] data; }
@@ -84,14 +90,14 @@ public:
     T max() const {
         T max(0.0);
         for (int i = 0; i < this->length(); i++) {
-            max = (this[i] > max) ? this[i] : max;
+            max = (this->data[i] > max) ? this->data[i] : max;
         }
 
         return max;
     }
 
     static inline T clamp(T x, T min, T max) {
-        if (x < min) 
+        if (x < min)
             return min;
         
         if (x > max)
@@ -102,7 +108,7 @@ public:
 
     void clamp(Vector<T> &result, T min, T max) const {
         for (int i = 0; i < this->length(); i++) {
-            this[i] = clamp(this[i], min, max);
+            result[i] = clamp(this->data[i], min, max);
         }
     }
 
