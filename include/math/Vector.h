@@ -47,13 +47,13 @@ public:
 
     void add(Vector<T> &result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
-            result.data[i] += this->data[i];
+            result.data[i] = this->data[i] + other.data[i];
         }
     }
 
     void sub(Vector<T> &result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
-            result.data[i] -= this->data[i];
+            result.data[i] = this->data[i] - other.data[i];
         }
     }
 
@@ -62,7 +62,7 @@ public:
      */
     void mul(Vector<T> &result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
-            result.data[i] *= this->data[i];
+            result.data[i] = this->data[i] * other.data[i];
         }
     }
 
@@ -74,7 +74,7 @@ public:
 
     void div(Vector<T> &result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
-            result.data[i] /= this->data[i];
+            result.data[i] = this->data[i] / other.data[i];
         }
     }
 
