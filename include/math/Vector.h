@@ -66,6 +66,12 @@ public:
         }
     }
 
+    void div(Vector<T> &result, const Vector& other) const {
+        for (int i = 0; i < this->length(); i++) {
+            result.data[i] /= this->data[i];
+        }
+    }
+
     T dot(const Vector& other) const {
         T sum(0.0);
         for (int i = 0; i < this->length(); i++) {
@@ -75,9 +81,30 @@ public:
         return sum;
     }
 
-    T max();
+    T max() const {
+        T max(0.0);
+        for (int i = 0; i < this->length(); i++) {
+            max = (this[i] > max) ? this[i] : max;
+        }
 
-    void clamp(Vector<T> &result, T min, T max) const;
+        return max;
+    }
+
+    static inline T clamp(T x, T min, T max) {
+        if (x < min) 
+            return min;
+        
+        if (x > max)
+            return max;
+
+        return x;
+    }
+
+    void clamp(Vector<T> &result, T min, T max) const {
+        for (int i = 0; i < this->length(); i++) {
+            this[i] = clamp(this[i], min, max);
+        }
+    }
 
     Vector<T> operator+(const Vector<T>& other) const {
         Vector<T> result(this->size);
@@ -94,6 +121,12 @@ public:
     Vector<T> operator*(const Vector<T>& other) const {
         Vector<T> result(this->size);
         this->mul( result, other);
+        return result;
+    }
+
+    Vector<T> operator/(const Vector<T>& other) const {
+        Vector<T> result(this->size);
+        this->div( result, other);
         return result;
     }
 

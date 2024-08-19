@@ -4,7 +4,7 @@
 
 #include <immintrin.h>
 #include <smmintrin.h>
-#include "math/Matrix.h"
+#include "math/Vector.h"
 
 template<>
 void Vector<float>::add(Vector<float> &result, const Vector<float> &other) const {

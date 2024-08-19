@@ -20,7 +20,7 @@ void DenseLayer::init(std::mt19937 &rand) {
 }
 
 Vector<float> DenseLayer::calculateError(Layer *previous, const Vector<float> nableCost) {
-    return previous->getActivationVec().mul(nableCost.mul(applyDerivative(this->zValues, this->activationFunction)));
+    return previous->getActivationVec() * nableCost * applyDerivative(this->zValues, this->activationFunction);
 }
 
 void DenseLayer::processInput(const Vector<float>& inputs) {

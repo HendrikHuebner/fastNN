@@ -35,7 +35,7 @@ void Matrix<float>::mul(Matrix<float> &result, const Matrix<float> &B) const {
             __m256 cell = _mm256_setzero_ps();
 
             int k = 0;
-            for (; k < A.width; k += 8) {
+            for (; k < this->width; k += 8) {
                 __m256 row = _mm256_load_ps(&this->data[j + k * this->width]);
                 __m256 col = _mm256_load_ps(&B.data[k + i * B.height]);
                 cell += _mm256_dp_ps(row, col, 1);

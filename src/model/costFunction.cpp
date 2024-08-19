@@ -18,7 +18,7 @@ float quadratic(const Vector<float>& output, const Vector<float>& expected) {
 }
 
 Vector<float> nablaQuadratic(const Vector<float>& output, const Vector<float>& expected) {
-    return output.sub(expected);
+    return output - expected;
 }
 
 float kullbackLeibler(const Vector<float>& output, const Vector<float>& expected) {
@@ -30,7 +30,7 @@ float kullbackLeibler(const Vector<float>& output, const Vector<float>& expected
 }
 
 Vector<float> nablaKullbackLeibler(const Vector<float>& output, const Vector<float>& expected) {
-    return expected.div(output).mul(-1.0);
+    return expected / output * -1.0;
 }
 
 float crossEntropy(const Vector<float>& output, const Vector<float>& expected) {
@@ -42,7 +42,9 @@ float crossEntropy(const Vector<float>& output, const Vector<float>& expected) {
 }
 
 Vector<float> nablaCrossEntropy(const Vector<float>& output, const Vector<float>& expected) {
-    return output.sub(expected).div(output.sub(output.mul(output)).clamp(0.000001F, 100000.0F));
+    Vector<float> t = output - output * output;
+    t.clamp(t, 0.000001F, 100000.0F);
+    return (output - expected) / t;
 }
 
 float applyCostFunction(CostFunction costFunction, const Vector<float>& output, const Vector<float>& expected) {

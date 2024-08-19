@@ -13,7 +13,7 @@
 class OutputLayer : DenseLayer {
 
     Vector<float> calculateError(Layer* _, const Vector<float> nableCost) override {
-        return nableCost.mul(applyDerivative(this->zValues, this->activationFunction));
+        return nableCost * applyDerivative(this->zValues, this->activationFunction);
     }
 
 };

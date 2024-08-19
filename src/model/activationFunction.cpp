@@ -35,9 +35,9 @@ inline Vector<float> sigmoid(Vector<float>& vec) {
     Vector<float> out = Vector<float>(vec.length(), 0);
 
     for(int i = 0; i < vec.length(); i++) {
-        out[i] = (float) (1/(1 + std::exp(-vec[i])));
+        out[i] = (float) 0.5 * (vec[i] / (1 + std::abs(vec[i]))) + 0.5;
     }
-
+    
     return out;
 }
 
@@ -45,7 +45,7 @@ inline Vector<float> dSigmoid(Vector<float>& vec) {
     Vector<float> out = sigmoid(vec);
 
     Vector<float> result = Vector<float>(vec.length(), 1.0F);
-    return out.mul(result).sub(out);
+    return out * (result - out);
 }
 
 inline Vector<float> softmax(Vector<float>& vec) {
@@ -58,14 +58,14 @@ inline Vector<float> softmax(Vector<float>& vec) {
         divisor += out[i];
     }
 
-    return out.mul(1.0 / divisor);
+    return out * (1.0 / divisor);
 }
 
 inline Vector<float> dSoftmax(Vector<float>& vec) {
     Vector<float> out = softmax(vec);
 
-    Vector<float> result = Vector<float>(vec.length(), 1.0F).sub(out);
-    return out.mul(result);
+    Vector<float> result = Vector<float>(vec.length(), 1.0F);
+    return out * (result - out);
 }
 
 Vector<float> apply(Vector<float> &vector, ActivationFunction f) {
