@@ -23,9 +23,27 @@ public:
         this->data = new T[this->size];
     }
 
+    Matrix(uint32_t width, uint32_t height, T init) : width(width), height(height), size(width * height) {
+        this->data = new T[this->size];
+        for (int i = 0; i < size; i++) {
+            this->data[i] = init;
+        }
+    }
+
+    Matrix(uint32_t width, uint32_t height, T data[]) : width(width), height(height), size(width * height), data(data) {}
+
     Matrix(const Matrix& copy) : width(copy.width), height(copy.height), size(copy.size), data(copy.data) {}
 
     ~Matrix() { delete[] data; }
+
+    static Matrix<T> ident(uint32_t size) {
+        Matrix<T> m(size, size);
+        for (int i = 0; i < size; i++) {
+            m.data[i * (1 + size)] = (T) 1.0;
+        }
+        printf("eeeeee\n");
+        return m;
+    }
 
     T& operator[](const size_t index) {
         return data[index];
@@ -65,10 +83,8 @@ public:
             throw std::invalid_argument("Matrix dimensions do not match");
         }
 
-        for(int i = 0; i < this->height; i++) {
-            for(int j = 0; j < this->width; j++) {
-                result[i * this->width + j] += other[i * this->width + j];
-            }
+        for(int i = 0; i < this->size; i++) {
+            result[i] += other[i];
         }
     }
 
@@ -77,14 +93,12 @@ public:
         if (this->width != other.width || this->height != other.height) {
             throw std::invalid_argument("Matrix dimensions do not match");
 
-        } else if (this->width != result->width || this->height != result->height) {
+        } else if (this->width != result.width || this->height != result.height) {
             throw std::invalid_argument("Result matrix dimensions do not match");
         }
         
-        for(int i = 0; i < this->height; i++) {
-            for(int j = 0; j < this->width; j++) {
-                result[i * this->width + j] -= other[i * this->width + j];
-            }
+        for(int i = 0; i < this->size; i++) {
+            result[i] += other[i];
         }
     }
 
@@ -93,19 +107,20 @@ public:
         if (this->width != other.height) {
             throw std::invalid_argument("Operand size mismatch, cannot multiply matrices.");
         
-        } else if (result->width != other->width || result->height != this->height) {
+        } else if (result.width != other.width || result.height != this->height) {
             throw std::invalid_argument("Result matrix size does not match operands, cannot multiply matrices.");
         }
 
         for (int i = 0; i < other.width; i++) {
-            for (int j = 0; j < other.height; j++) {
+            for (int j = 0; j < this->height; j++) {
                 float cell = 0;
 
-                for (int k = 0; k < this->height; k++) {
-                    cell += this->data[j + k * this->width] * other[k + other.width * i];
+                for (int k = 0; k < this->width; k++) {
+                    printf("+ %f * %f ", this->data[k + j * this->width], other[i + other.width * k]);
+                    cell += this->data[k + j * this->width] * other[i + other.width * k];
                 }
-
-                result[i + result.width*j] = cell;
+                printf("\n");
+                result[i + result.width * j] = cell;
             }
         }
     }
@@ -123,7 +138,7 @@ public:
     }
 
     void transpose(const Matrix<T>& result) const {
-        if (this->width != result->width || this->height != result->height) {
+        if (this->width != result.width || this->height != result.height) {
             throw std::invalid_argument("Result matrix size mismatch, cannot transpose matrix.");
         }
 
@@ -147,7 +162,7 @@ public:
     }
 
     Matrix<T> operator*(const Matrix<T>& other) const {
-        Matrix<T> result(other->width, this->height);
+        Matrix<T> result(other.width, this->height);
         this->mul(result, other);
         return result;
     }

@@ -87,6 +87,8 @@ if (BUILD_TESTS)
     add_executable(tests)
     add_subdirectory(test)
     
+    SET(CTEST_OUTPUT_ON_FAILURE ON)
+
     target_link_libraries(
         tests
         GTest::gtest_main

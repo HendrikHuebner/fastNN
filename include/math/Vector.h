@@ -81,7 +81,7 @@ public:
     T dot(const Vector& other) const {
         T sum(0.0);
         for (int i = 0; i < this->length(); i++) {
-            sum += this[i] * other[i];
+            sum += this->data[i] * other.data[i];
         }
 
         return sum;
