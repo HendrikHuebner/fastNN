@@ -7,23 +7,21 @@
 
 #pragma once
 
-#include "model/Layer.h"
-#include "model/costFunction.h"
-#include "model/GradientUpdater.h"
 #include <memory>
 #include <random>
-
+#include "model/GradientUpdater.h"
+#include "model/Layer.h"
+#include "model/costFunction.h"
 
 class Model {
-private:
+   private:
     std::mt19937 rand;
     std::vector<Layer*> layers;
     CostFunction cost;
     std::unique_ptr<GradientUpdater> gradientUpdater;
     int parameterCount = 0;
 
-public:
-
+   public:
     void init();
 
     /**
@@ -48,8 +46,6 @@ public:
      * @return cost value
      */
     float determineCost(Vector<float> networkOutput, Vector<float> expected);
-
 };
 
-
-#endif //FASTNN_MODEL_H
+#endif  //FASTNN_MODEL_H

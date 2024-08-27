@@ -9,15 +9,13 @@
 
 class GradientUpdater {
 
-public:
-
+   public:
     virtual void init(int networkParameterCount) {}
 
-    virtual void applyUpdater(std::vector<float> &parameters, const std::vector<float> &gradient) = 0;
+    virtual void applyUpdater(std::vector<float>& parameters,
+                              const std::vector<float>& gradient) = 0;
 
-    virtual bool shouldUpdate(int epoch, int example) {
-        return true;
-    }
+    virtual bool shouldUpdate(int epoch, int example) { return true; }
 };
 
-#endif //FASTNN_GRADIENTUPDATER_H
+#endif  //FASTNN_GRADIENTUPDATER_H

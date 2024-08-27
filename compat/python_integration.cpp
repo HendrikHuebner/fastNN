@@ -7,7 +7,6 @@
 
 namespace py = pybind11;
 
-
 void test() {
     std::cout << "Hello World" << std::endl;
 }

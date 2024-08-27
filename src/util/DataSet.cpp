@@ -2,7 +2,6 @@
 // Created by hhuebner on 1/1/24.
 //
 
-
 #include "util/DataSet.h"
 
 using namespace std;
@@ -13,14 +12,12 @@ void inline swap(std::vector<float>& vec, int a, int b) {
     vec[b] = t;
 }
 
-
 void DataSet::shuffle() {
     for (int k = 0; k < this->size(); k++) {
         int r = k + this->random() % (this->size() - k);
         swap(this->features, k, r);
     }
 }
-
 
 void DataSet::mixBatches() {
 
@@ -44,8 +41,6 @@ void DataSet::mixBatches() {
     }
 }
 
-
-
 pair<vector<float>, vector<float>> DataSet::nextBatch() {
     vector<float> newLabels;
     vector<float> newFeatures;
@@ -58,4 +53,3 @@ pair<vector<float>, vector<float>> DataSet::nextBatch() {
     this->currentBatch++;
     return make_pair(newFeatures, newLabels);
 }
-

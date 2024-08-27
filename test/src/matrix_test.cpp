@@ -7,8 +7,6 @@ TEST_EACH_FP_TYPE(MatrixAddTest, BasicAssertions) {
     Matrix<T> m1(5, 5, (T)1.0);
     Matrix<T> m2(5, 5, (T)2.0);
     Matrix<T> m3(5, 5, (T)3.0);
-
-    
 }
 
 TEST_EACH_FP_TYPE(MatrixMulTest, BasicAssertions) {
@@ -17,10 +15,10 @@ TEST_EACH_FP_TYPE(MatrixMulTest, BasicAssertions) {
     Matrix<T> m1(3, 3, (T)1.0);
     Matrix<T> m3(3, 3, (T)3.0);
 
-    T *d = new T[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    T* d = new T[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
     Matrix<T> m4(3, 3, d);
 
-    T *d2 = new T[]{30, 36, 42, 66, 81, 96, 102, 126, 150};
+    T* d2 = new T[]{30, 36, 42, 66, 81, 96, 102, 126, 150};
     Matrix<T> m5(3, 3, d2);
 
     EXPECT_MATRIX_EQ(id_3 * m3 * id_3 * id_3, m3);
@@ -31,6 +29,4 @@ TEST_EACH_FP_TYPE(MatrixMulTest, BasicAssertions) {
     EXPECT_MATRIX_EQ(m4 * m4, m5);
 }
 
-TEST_EACH_FP_TYPE(MatrixVecTest, BasicAssertions) {
-
-}
+TEST_EACH_FP_TYPE(MatrixVecTest, BasicAssertions) {}

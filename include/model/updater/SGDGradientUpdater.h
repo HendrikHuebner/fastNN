@@ -13,17 +13,14 @@ struct SGDUpdaterConfig {
     int batchSize;
 };
 
-
 class SGDGradientUpdater : public GradientUpdater {
 
-private:
-
+   private:
     const struct SGDUpdaterConfig config;
     std::vector<float> prevMoment;
     std::vector<float> prevVariance;
 
-public:
-
+   public:
     SGDGradientUpdater(const struct SGDUpdaterConfig config) : config(config) {}
 
     void init(int networkParameterCount) override {
@@ -32,7 +29,7 @@ public:
     }
 
     void applyUpdater(std::vector<float>& parameters, const std::vector<float>& gradient) override {
-        for(int i = 0; i < gradient.size(); i++) {
+        for (int i = 0; i < gradient.size(); i++) {
             parameters[i] -= gradient[i] * this->config.learningRate;
         }
     }
@@ -42,5 +39,4 @@ public:
     }
 };
 
-
-#endif //FASTNN_ADAMGRADIENTUPDATER_H
+#endif  //FASTNN_ADAMGRADIENTUPDATER_H

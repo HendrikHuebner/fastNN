@@ -2,11 +2,10 @@
 // Created by hhuebner on 12/20/23.
 //
 
+#include "model/costFunction.h"
 #include <cmath>
 #include <stdexcept>
 #include "math/Vector.h"
-#include "model/costFunction.h"
-
 
 float quadratic(const Vector<float>& output, const Vector<float>& expected) {
     double sum = 0;
@@ -47,7 +46,8 @@ Vector<float> nablaCrossEntropy(const Vector<float>& output, const Vector<float>
     return (output - expected) / t;
 }
 
-float applyCostFunction(CostFunction costFunction, const Vector<float>& output, const Vector<float>& expected) {
+float applyCostFunction(CostFunction costFunction, const Vector<float>& output,
+                        const Vector<float>& expected) {
     switch (costFunction) {
         case QUADRATIC:
             return quadratic(output, expected);
@@ -61,7 +61,8 @@ float applyCostFunction(CostFunction costFunction, const Vector<float>& output, 
     }
 }
 
-Vector<float> applyCostDerivative(CostFunction costFunction, const Vector<float>& output, const Vector<float>& expected) {
+Vector<float> applyCostDerivative(CostFunction costFunction, const Vector<float>& output,
+                                  const Vector<float>& expected) {
     switch (costFunction) {
         case QUADRATIC:
             return nablaQuadratic(output, expected);

@@ -1,7 +1,7 @@
 #include "math/Vector.h"
+#include <float.h>
 #include <gtest/gtest.h>
 #include "test_util.h"
-#include <float.h>
 
 using namespace std;
 
@@ -91,12 +91,12 @@ TEST_EACH_FP_TYPE(VectorDotProdTest, BasicAssertions) {
     T v0 = v2.dot(v3);
     T v1 = v3.dot(v2);
 
-    EXPECT_EQ(v0, (T) 5 * 6.0);
-    EXPECT_EQ(v1, (T) 5 * 6.0);
+    EXPECT_EQ(v0, (T)5 * 6.0);
+    EXPECT_EQ(v1, (T)5 * 6.0);
 
     T w0 = w2.dot(w3);
     T w1 = w3.dot(w2);
 
-    EXPECT_EQ(w0, (T) 500 * 6.0);
-    EXPECT_EQ(w1, (T) 500 * 6.0);
+    EXPECT_EQ(w0, (T)500 * 6.0);
+    EXPECT_EQ(w1, (T)500 * 6.0);
 }

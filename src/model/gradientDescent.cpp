@@ -1,10 +1,11 @@
 #include "model/gradientDescent.h"
-#include "vector"
+#include "math/Matrix.h"
 #include "math/Vector.h"
 #include "model/Layer.h"
-#include "math/Matrix.h"
+#include "vector"
 
-std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers, const Vector<float>& nablaCost) {
+std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers,
+                                          const Vector<float>& nablaCost) {
 
     std::vector<Vector<float>> errors;
 
@@ -30,8 +31,8 @@ std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers, cons
     return errors;
 }
 
-
-Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>& prevActivation, const std::vector<Vector<float>>& errors) {
+Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>& prevActivation,
+                                    const std::vector<Vector<float>>& errors) {
     auto matrix = new Matrix<float>(prevActivation.length(), layer->getOutputSize());
     const Vector error = errors[index];
 
@@ -52,10 +53,11 @@ Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>
  * @param input
  * @return
  */
-std::vector<Matrix<float>*> calcWeightGradient(const std::vector<Vector<float>> errors, const std::vector<Layer*>& layers, const Vector<float>& input) {
+std::vector<Matrix<float>*> calcWeightGradient(const std::vector<Vector<float>> errors,
+                                               const std::vector<Layer*>& layers,
+                                               const Vector<float>& input) {
     std::vector<Matrix<float>*> grad;
     grad.reserve(layers.size());
-
 
     for (size_t i = 0; i < layers.size(); i++) {
         Vector<float> previousActivation = (i = 0) ? input : layers[i - 1]->getActivationVec();

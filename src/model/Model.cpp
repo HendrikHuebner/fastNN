@@ -3,9 +3,8 @@
 #include "model/DenseLayer.h"
 #include "model/gradientDescent.h"
 
-
 void Model::init() {
-    for(Layer* layer : this->layers) {
+    for (Layer* layer : this->layers) {
         layer->init(this->rand);
         this->parameterCount += layer->getParameterCount();
     }
@@ -21,7 +20,7 @@ void Model::init() {
 * @return network output
 */
 Vector<float> Model::propagateData(const Vector<float> data, const int layerIndex) {
-    if(layerIndex >= this->layers.size()) {
+    if (layerIndex >= this->layers.size()) {
         return data;
     } else {
         this->layers[layerIndex]->processInput(data);
@@ -40,7 +39,7 @@ void Model::updateParameters(Vector<float> input, Vector<float> output, Vector<f
     std::vector<Vector<float>> biasGradient = error;
     std::vector<Matrix<float>*> weightGradient = calcWeightGradient(error, this->layers, input);
 
-    for(int i = 0; i < this->layers.size(); i++) {
+    for (int i = 0; i < this->layers.size(); i++) {
         Layer* layer = this->layers[i];
 
         if (DenseLayer* dense = dynamic_cast<DenseLayer*>(layer)) {
@@ -53,9 +52,9 @@ void Model::updateParameters(Vector<float> input, Vector<float> output, Vector<f
     }
 }
 
-void train(Model model, const std::vector<Vector<float>> features, const std::vector<Vector<float>> labels) {
-    for(int i = 0; i < features.size(); i++ ) {
+void train(Model model, const std::vector<Vector<float>> features,
+           const std::vector<Vector<float>> labels) {
+    for (int i = 0; i < features.size(); i++) {
         Vector<float> output = model.propagateData(features[i], 0);
-
     }
 }

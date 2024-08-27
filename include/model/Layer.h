@@ -5,25 +5,22 @@
 #ifndef FASTNN_LAYER_H
 #define FASTNN_LAYER_H
 
-
-#include <random>
 #include <memory>
+#include <random>
 #include "math/Vector.h"
 
 class Layer {
 
-protected:
+   protected:
     const int inputSize;
     const int outputSize;
     Vector<float> activationVec;
 
-public:
-    Layer(int inputSize, int outputSize) :
-    inputSize(inputSize), outputSize(outputSize), activationVec(outputSize, 0.0f) {}
+   public:
+    Layer(int inputSize, int outputSize)
+        : inputSize(inputSize), outputSize(outputSize), activationVec(outputSize, 0.0f) {}
 
-    virtual int getOutputSize() {
-        return this->outputSize;
-    }
+    virtual int getOutputSize() { return this->outputSize; }
 
     /**
      * Processes input from previous layer and updates activationVec
@@ -37,18 +34,13 @@ public:
      */
     virtual void init(std::mt19937& rand) = 0;
 
-    Vector<float> getActivationVec() const {
-        return this->activationVec;
-    }
+    Vector<float> getActivationVec() const { return this->activationVec; }
 
-    virtual int getParameterCount() const {
-        return 0;
-    }
+    virtual int getParameterCount() const { return 0; }
 
     virtual Vector<float> calculateError(Layer* previous, const Vector<float> prevError) = 0;
 
     virtual ~Layer() = default;
 };
 
-
-#endif //FASTNN_LAYER_H
+#endif  //FASTNN_LAYER_H

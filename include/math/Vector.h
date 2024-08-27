@@ -1,20 +1,18 @@
 #pragma once
 
+#include <stdint.h>
 #include <cstddef>
 #include <vector>
-#include <stdint.h>
 #include "util/helpers.h"
 
 template <typename T, typename = enable_if_float<T>>
 class Vector {
 
-private:
-    T *data;
+   private:
+    T* data;
     size_t size;
 
-public:
-
-
+   public:
     Vector(size_t size, T init) : size(size) {
         this->data = new T[size];
         std::fill_n(this->data, size, init);
@@ -24,34 +22,26 @@ public:
         this->data = new T[size];
         std::fill_n(this->data, size, 0);
     }
-    
+
     Vector(const Vector& copy) : data(copy.data), size(copy.size) {}
-    
+
     ~Vector() { delete[] data; }
 
-    size_t length() const {
-        return this->size;
-    }
+    size_t length() const { return this->size; }
 
-    T& operator[](size_t index) {
-        return data[index];
-    }
+    T& operator[](size_t index) { return data[index]; }
 
-    T operator[](size_t index) const {
-        return data[index];
-    }
- 
-    std::vector<T> toStdVector() const {
-        return std::vector(data, data + this->size);
-    }
+    T operator[](size_t index) const { return data[index]; }
 
-    void add(Vector<T> &result, const Vector& other) const {
+    std::vector<T> toStdVector() const { return std::vector(data, data + this->size); }
+
+    void add(Vector<T>& result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] + other.data[i];
         }
     }
 
-    void sub(Vector<T> &result, const Vector& other) const {
+    void sub(Vector<T>& result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] - other.data[i];
         }
@@ -60,19 +50,19 @@ public:
     /**
      * Element wise multiplication
      */
-    void mul(Vector<T> &result, const Vector& other) const {
+    void mul(Vector<T>& result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] * other.data[i];
         }
     }
 
-    void mul(Vector<T> &result, T scalar) const {
+    void mul(Vector<T>& result, T scalar) const {
         for (int i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] * scalar;
         }
     }
 
-    void div(Vector<T> &result, const Vector& other) const {
+    void div(Vector<T>& result, const Vector& other) const {
         for (int i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] / other.data[i];
         }
@@ -99,14 +89,14 @@ public:
     static inline T clamp(T x, T min, T max) {
         if (x < min)
             return min;
-        
+
         if (x > max)
             return max;
 
         return x;
     }
 
-    void clamp(Vector<T> &result, T min, T max) const {
+    void clamp(Vector<T>& result, T min, T max) const {
         for (int i = 0; i < this->length(); i++) {
             result[i] = clamp(this->data[i], min, max);
         }
@@ -114,32 +104,31 @@ public:
 
     Vector<T> operator+(const Vector<T>& other) const {
         Vector<T> result(this->size);
-        this->add( result, other);
+        this->add(result, other);
         return result;
     }
 
     Vector<T> operator-(const Vector<T>& other) const {
         Vector<T> result(this->size);
-        this->sub( result, other);
+        this->sub(result, other);
         return result;
     }
 
     Vector<T> operator*(const Vector<T>& other) const {
         Vector<T> result(this->size);
-        this->mul( result, other);
+        this->mul(result, other);
         return result;
     }
 
     Vector<T> operator/(const Vector<T>& other) const {
         Vector<T> result(this->size);
-        this->div( result, other);
+        this->div(result, other);
         return result;
     }
 
     Vector<T> operator*(const T other) const {
         Vector<T> result(this->size);
-        this->mul( result, other);
+        this->mul(result, other);
         return result;
     }
-
 };

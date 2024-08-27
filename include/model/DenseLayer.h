@@ -5,15 +5,14 @@
 #ifndef FASTNN_DENSELAYER_H
 #define FASTNN_DENSELAYER_H
 
-
+#include "math/Matrix.h"
 #include "model/Layer.h"
 #include "model/activationFunction.h"
-#include "math/Matrix.h"
 #include "weightInit.h"
 
 class DenseLayer : protected Layer {
 
-protected:
+   protected:
     const ActivationFunction activationFunction;
     const WeightInit weightInit;
     const int parameterCount;
@@ -22,34 +21,28 @@ protected:
     Vector<float> biases;
     Vector<float> zValues;
 
-public:
-    DenseLayer(const ActivationFunction activationFunction, const WeightInit weightInit, const int inputSize, const int outputSize):
-    Layer(inputSize, outputSize),
-    activationFunction(activationFunction),
-    weightInit(weightInit),
-    parameterCount(outputSize + inputSize * outputSize),
-    weights(inputSize, outputSize),
-    biases(outputSize, 0.0f),
-    zValues(outputSize, 0.0f) {}
+   public:
+    DenseLayer(const ActivationFunction activationFunction, const WeightInit weightInit,
+               const int inputSize, const int outputSize)
+        : Layer(inputSize, outputSize),
+          activationFunction(activationFunction),
+          weightInit(weightInit),
+          parameterCount(outputSize + inputSize * outputSize),
+          weights(inputSize, outputSize),
+          biases(outputSize, 0.0f),
+          zValues(outputSize, 0.0f) {}
 
-    void init(std::mt19937 &rand) override;
+    void init(std::mt19937& rand) override;
 
-    virtual int getParameterCount() const override {
-        return this->parameterCount;
-    }
+    virtual int getParameterCount() const override { return this->parameterCount; }
 
     Vector<float> calculateError(Layer* previous, const Vector<float> nableCost) override;
 
-    Matrix<float>* getWeights() {
-        return &this->weights;
-    }
+    Matrix<float>* getWeights() { return &this->weights; }
 
-    Vector<float> getBiases() {
-        return this->biases;
-    }
+    Vector<float> getBiases() { return this->biases; }
 
     void processInput(const Vector<float>& inputs) override;
 };
 
-
-#endif //FASTNN_DENSELAYER_H
+#endif  //FASTNN_DENSELAYER_H

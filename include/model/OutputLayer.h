@@ -5,18 +5,15 @@
 #ifndef FASTNN_OUTPUTLAYER_H
 #define FASTNN_OUTPUTLAYER_H
 
-
-#include "math/Vector.h"
-#include "activationFunction.h"
 #include "DenseLayer.h"
+#include "activationFunction.h"
+#include "math/Vector.h"
 
 class OutputLayer : DenseLayer {
 
     Vector<float> calculateError(Layer* _, const Vector<float> nableCost) override {
         return nableCost * applyDerivative(this->zValues, this->activationFunction);
     }
-
 };
 
-
-#endif //FASTNN_OUTPUTLAYER_H
+#endif  //FASTNN_OUTPUTLAYER_H

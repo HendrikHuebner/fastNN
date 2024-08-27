@@ -5,17 +5,12 @@
 #ifndef FASTNN_ACTIVATIONFUNCTION_H
 #define FASTNN_ACTIVATIONFUNCTION_H
 
-
 #include "math/Vector.h"
 
-enum ActivationFunction {
-    RELU,
-    SIGMOID,
-    SOFTMAX
-};
+enum ActivationFunction { RELU, SIGMOID, SOFTMAX };
 
 Vector<float> apply(Vector<float>& vector, ActivationFunction f);
 
 Vector<float> applyDerivative(Vector<float>& vector, ActivationFunction f);
 
-#endif //FASTNN_ACTIVATIONFUNCTION_H
+#endif  //FASTNN_ACTIVATIONFUNCTION_H

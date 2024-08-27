@@ -5,9 +5,8 @@
 #ifndef FASTNN_GRADIENTDESCENT_H
 #define FASTNN_GRADIENTDESCENT_H
 
-
-#include "model/Layer.h"
 #include "math/Matrix.h"
+#include "model/Layer.h"
 
 /**
  * Calculates the errors at each layer.
@@ -17,8 +16,8 @@
  * @param nablaCost
  * @return array of error vectors
  */
-std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers, const Vector<float>& nablaCost);
-
+std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers,
+                                          const Vector<float>& nablaCost);
 
 /**
  * Calculate the gradient at the given index and layer
@@ -28,8 +27,8 @@ std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers, cons
  * @param errors
  * @return Gradient Matrix
  */
-Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>& prevActivation, const std::vector<Vector<float>>& errors);
-
+Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>& prevActivation,
+                                    const std::vector<Vector<float>>& errors);
 
 /**
  * Calculates dC/dw by multiplying the error with the activation of the neuron of first layer the weight is connected to
@@ -39,6 +38,8 @@ Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>
  * @param input
  * @return
  */
-std::vector<Matrix<float>*> calcWeightGradient(const std::vector<Vector<float>> errors, const std::vector<Layer*>& layers, const Vector<float>& input);
+std::vector<Matrix<float>*> calcWeightGradient(const std::vector<Vector<float>> errors,
+                                               const std::vector<Layer*>& layers,
+                                               const Vector<float>& input);
 
-#endif //FASTNN_GRADIENTDESCENT_H
+#endif  //FASTNN_GRADIENTDESCENT_H

@@ -13,20 +13,18 @@ struct AdamUpdaterConfig {
     float beta1;
     float beta2;
     float epsilon;
-} ;
+};
 
 const struct AdamUpdaterConfig DEFAULT_CFG = {0.001F, 0.9F, 0.99F, 0.00000001F};
 
 class AdamGradientUpdater : public GradientUpdater {
 
-private:
-
+   private:
     const struct AdamUpdaterConfig config;
     std::vector<float> prevMoment;
     std::vector<float> prevVariance;
 
-public:
-
+   public:
     AdamGradientUpdater(const struct AdamUpdaterConfig config) : config(config) {}
 
     void init(int networkParameterCount) override {
@@ -37,5 +35,4 @@ public:
     void applyUpdater(std::vector<float>& parameters, const std::vector<float>& gradient) override;
 };
 
-
-#endif //FASTNN_ADAMGRADIENTUPDATER_H
+#endif  //FASTNN_ADAMGRADIENTUPDATER_H
