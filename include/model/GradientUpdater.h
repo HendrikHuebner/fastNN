@@ -1,9 +1,4 @@
-//
-// Created by hhuebner on 12/21/23.
-//
-
-#ifndef FASTNN_GRADIENTUPDATER_H
-#define FASTNN_GRADIENTUPDATER_H
+#pragma once
 
 #include <vector>
 
@@ -17,5 +12,3 @@ class GradientUpdater {
 
     virtual bool shouldUpdate(int epoch, int example) { return true; }
 };
-
-#endif  //FASTNN_GRADIENTUPDATER_H

@@ -1,11 +1,5 @@
-//
-// Created by hhuebner on 12/30/23.
-//
+#pragma once
 
-#ifndef FASTNN_DATASET_H
-#define FASTNN_DATASET_H
-
-#include <algorithm>
 #include <random>
 #include <stdexcept>
 #include <vector>
@@ -47,5 +41,3 @@ class DataSet {
     int currentBatch = 0;
     std::mt19937 random;
 };
-
-#endif  //FASTNN_DATASET_H

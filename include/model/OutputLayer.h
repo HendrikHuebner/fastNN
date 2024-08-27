@@ -1,9 +1,4 @@
-//
-// Created by hhuebner on 12/21/23.
-//
-
-#ifndef FASTNN_OUTPUTLAYER_H
-#define FASTNN_OUTPUTLAYER_H
+#pragma once
 
 #include "DenseLayer.h"
 #include "activationFunction.h"
@@ -15,5 +10,3 @@ class OutputLayer : DenseLayer {
         return nableCost * applyDerivative(this->zValues, this->activationFunction);
     }
 };
-
-#endif  //FASTNN_OUTPUTLAYER_H

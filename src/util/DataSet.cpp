@@ -1,7 +1,3 @@
-//
-// Created by hhuebner on 1/1/24.
-//
-
 #include "util/DataSet.h"
 
 using namespace std;

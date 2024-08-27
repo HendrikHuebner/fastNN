@@ -1,6 +1,3 @@
-//
-// Created by hhuebner on 12/20/23.
-//
 #include "model/activationFunction.h"
 #include <cmath>
 #include <stdexcept>

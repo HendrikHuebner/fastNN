@@ -1,9 +1,4 @@
-//
-// Created by hhuebner on 12/21/23.
-//
-
-#ifndef FASTNN_GRADIENTDESCENT_H
-#define FASTNN_GRADIENTDESCENT_H
+#pragma once
 
 #include "math/Matrix.h"
 #include "model/Layer.h"
@@ -41,5 +36,3 @@ Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>
 std::vector<Matrix<float>*> calcWeightGradient(const std::vector<Vector<float>> errors,
                                                const std::vector<Layer*>& layers,
                                                const Vector<float>& input);
-
-#endif  //FASTNN_GRADIENTDESCENT_H

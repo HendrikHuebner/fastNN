@@ -1,11 +1,5 @@
-//
-// Created by hhuebner on 12/21/23.
-//
+#pragma once
 
-#ifndef FASTNN_LAYER_H
-#define FASTNN_LAYER_H
-
-#include <memory>
 #include <random>
 #include "math/Vector.h"
 
@@ -43,4 +37,3 @@ class Layer {
     virtual ~Layer() = default;
 };
 
-#endif  //FASTNN_LAYER_H

@@ -1,10 +1,3 @@
-//
-// Created by hhuebner on 12/19/23.
-//
-
-#ifndef FASTNN_MODEL_H
-#define FASTNN_MODEL_H
-
 #pragma once
 
 #include <memory>
@@ -47,5 +40,3 @@ class Model {
      */
     float determineCost(Vector<float> networkOutput, Vector<float> expected);
 };
-
-#endif  //FASTNN_MODEL_H

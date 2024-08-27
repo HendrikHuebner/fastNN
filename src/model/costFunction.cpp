@@ -1,7 +1,3 @@
-//
-// Created by hhuebner on 12/20/23.
-//
-
 #include "model/costFunction.h"
 #include <cmath>
 #include <stdexcept>

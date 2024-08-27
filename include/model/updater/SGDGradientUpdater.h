@@ -1,9 +1,4 @@
-//
-// Created by hhuebner on 12/21/23.
-//
-
-#ifndef FASTNN_ADAMGRADIENTUPDATER_H
-#define FASTNN_ADAMGRADIENTUPDATER_H
+#pragma once
 
 #include <vector>
 #include "model/GradientUpdater.h"
@@ -38,5 +33,3 @@ class SGDGradientUpdater : public GradientUpdater {
         return example % this->config.batchSize == 0;
     }
 };
-
-#endif  //FASTNN_ADAMGRADIENTUPDATER_H

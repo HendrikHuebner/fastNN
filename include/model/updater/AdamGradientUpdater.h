@@ -1,9 +1,4 @@
-//
-// Created by hhuebner on 12/21/23.
-//
-
-#ifndef FASTNN_ADAMGRADIENTUPDATER_H
-#define FASTNN_ADAMGRADIENTUPDATER_H
+#pragma once
 
 #include <vector>
 #include "model/GradientUpdater.h"
@@ -34,5 +29,3 @@ class AdamGradientUpdater : public GradientUpdater {
 
     void applyUpdater(std::vector<float>& parameters, const std::vector<float>& gradient) override;
 };
-
-#endif  //FASTNN_ADAMGRADIENTUPDATER_H

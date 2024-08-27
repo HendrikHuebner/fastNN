@@ -1,9 +1,4 @@
-//
-// Created by hhuebner on 12/21/23.
-//
-
-#ifndef FASTNN_DENSELAYER_H
-#define FASTNN_DENSELAYER_H
+#pragma once
 
 #include "math/Matrix.h"
 #include "model/Layer.h"
@@ -44,5 +39,3 @@ class DenseLayer : protected Layer {
 
     void processInput(const Vector<float>& inputs) override;
 };
-
-#endif  //FASTNN_DENSELAYER_H

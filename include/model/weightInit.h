@@ -1,8 +1,6 @@
-#include <random>
+#pragma once
 
-//
-// Created by hhuebner on 12/21/23.
-//
+#include <random>
 
 enum WeightInit { UNIFORM, XAVIER, GAUSSIAN, ZEROS, ONES };
 
