@@ -19,7 +19,7 @@ void Model::init() {
 * @param layerIndex
 * @return network output
 */
-Vector<float> Model::propagateData(const Vector<float> data, const int layerIndex) {
+Vector<float> Model::propagateData(const Vector<float> data, const uint32_t layerIndex) {
     if (layerIndex >= this->layers.size()) {
         return data;
     } else {
@@ -39,7 +39,7 @@ void Model::updateParameters(Vector<float> input, Vector<float> output, Vector<f
     std::vector<Vector<float>> biasGradient = error;
     std::vector<Matrix<float>*> weightGradient = calcWeightGradient(error, this->layers, input);
 
-    for (int i = 0; i < this->layers.size(); i++) {
+    for (uint32_t i = 0; i < this->layers.size(); i++) {
         Layer* layer = this->layers[i];
 
         if (DenseLayer* dense = dynamic_cast<DenseLayer*>(layer)) {
@@ -54,7 +54,7 @@ void Model::updateParameters(Vector<float> input, Vector<float> output, Vector<f
 
 void train(Model model, const std::vector<Vector<float>> features,
            const std::vector<Vector<float>> labels) {
-    for (int i = 0; i < features.size(); i++) {
+    for (uint32_t i = 0; i < features.size(); i++) {
         Vector<float> output = model.propagateData(features[i], 0);
     }
 }

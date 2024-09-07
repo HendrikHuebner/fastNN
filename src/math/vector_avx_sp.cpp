@@ -3,10 +3,11 @@
 #include <immintrin.h>
 #include <smmintrin.h>
 #include "math/Vector.h"
+#include <cstdint>
 
 template <>
 void Vector<float>::add(Vector<float>& result, const Vector<float>& other) const {
-    int i = 0;
+    uint32_t i = 0;
     for (; i < this->size; i += 16) {
         __m512 a = _mm512_loadu_ps(&this->data[i]);
         __m512 b = _mm512_loadu_ps(&other.data[i]);
@@ -21,7 +22,7 @@ void Vector<float>::add(Vector<float>& result, const Vector<float>& other) const
 
 template <>
 void Vector<float>::sub(Vector<float>& result, const Vector<float>& other) const {
-    int i = 0;
+    uint32_t i = 0;
     for (; i < this->size; i += 16) {
         __m512 a = _mm512_loadu_ps(&this->data[i]);
         __m512 b = _mm512_loadu_ps(&other.data[i]);
@@ -36,7 +37,7 @@ void Vector<float>::sub(Vector<float>& result, const Vector<float>& other) const
 
 template <>
 void Vector<float>::mul(Vector<float>& result, const Vector<float>& other) const {
-    int i = 0;
+    uint32_t i = 0;
     for (; i < this->size; i += 16) {
         __m512 a = _mm512_loadu_ps(&this->data[i]);
         __m512 b = _mm512_loadu_ps(&other.data[i]);

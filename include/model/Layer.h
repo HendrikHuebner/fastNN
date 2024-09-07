@@ -6,15 +6,15 @@
 class Layer {
 
    protected:
-    const int inputSize;
-    const int outputSize;
+    const uint32_t inputSize;
+    const uint32_t outputSize;
     Vector<float> activationVec;
 
    public:
-    Layer(int inputSize, int outputSize)
+    Layer(uint32_t inputSize, uint32_t outputSize)
         : inputSize(inputSize), outputSize(outputSize), activationVec(outputSize, 0.0f) {}
 
-    virtual int getOutputSize() { return this->outputSize; }
+    virtual uint32_t getOutputSize() { return this->outputSize; }
 
     /**
      * Processes input from previous layer and updates activationVec
@@ -30,7 +30,7 @@ class Layer {
 
     Vector<float> getActivationVec() const { return this->activationVec; }
 
-    virtual int getParameterCount() const { return 0; }
+    virtual uint32_t getParameterCount() const { return 0; }
 
     virtual Vector<float> calculateError(Layer* previous, const Vector<float> prevError) = 0;
 

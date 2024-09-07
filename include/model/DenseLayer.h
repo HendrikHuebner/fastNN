@@ -10,7 +10,7 @@ class DenseLayer : protected Layer {
    protected:
     const ActivationFunction activationFunction;
     const WeightInit weightInit;
-    const int parameterCount;
+    const uint32_t parameterCount;
 
     Matrix<float> weights;
     Vector<float> biases;
@@ -18,7 +18,7 @@ class DenseLayer : protected Layer {
 
    public:
     DenseLayer(const ActivationFunction activationFunction, const WeightInit weightInit,
-               const int inputSize, const int outputSize)
+               const uint32_t inputSize, const uint32_t outputSize)
         : Layer(inputSize, outputSize),
           activationFunction(activationFunction),
           weightInit(weightInit),
@@ -29,7 +29,7 @@ class DenseLayer : protected Layer {
 
     void init(std::mt19937& rand) override;
 
-    virtual int getParameterCount() const override { return this->parameterCount; }
+    virtual uint32_t getParameterCount() const override { return this->parameterCount; }
 
     Vector<float> calculateError(Layer* previous, const Vector<float> nableCost) override;
 

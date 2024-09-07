@@ -5,7 +5,7 @@
 inline Vector<float> relu(Vector<float>& vec) {
     Vector<float> out = Vector<float>(vec.length(), 0.0f);
 
-    for (int i = 0; i < vec.length(); i++) {
+    for (uint32_t i = 0; i < vec.length(); i++) {
         if (vec[i] > 0) {
             out[i] = vec[i];
         }
@@ -17,7 +17,7 @@ inline Vector<float> relu(Vector<float>& vec) {
 inline Vector<float> dRelu(Vector<float>& vec) {
     Vector<float> out = Vector<float>(vec.length(), 0.0f);
 
-    for (int i = 0; i < vec.length(); i++) {
+    for (uint32_t i = 0; i < vec.length(); i++) {
 
         if (vec[i] > 0) {
             out[i] = 1;
@@ -30,7 +30,7 @@ inline Vector<float> dRelu(Vector<float>& vec) {
 inline Vector<float> sigmoid(Vector<float>& vec) {
     Vector<float> out = Vector<float>(vec.length(), 0);
 
-    for (int i = 0; i < vec.length(); i++) {
+    for (uint32_t i = 0; i < vec.length(); i++) {
         out[i] = (float)0.5 * (vec[i] / (1 + std::abs(vec[i]))) + 0.5;
     }
 
@@ -49,7 +49,7 @@ inline Vector<float> softmax(Vector<float>& vec) {
     float max = vec.max();
     double divisor = 0;
 
-    for (int i = 0; i < vec.length(); i++) {
+    for (uint32_t i = 0; i < vec.length(); i++) {
         out[i] = (float)std::exp(vec[i] - max);
         divisor += out[i];
     }

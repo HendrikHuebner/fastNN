@@ -5,7 +5,7 @@
 
 using namespace std;
 
-TEST_EACH_FP_TYPE(VectorAdditionTest, BasicAssertions) {
+TEST_EACH_FP_TYPE(MathTests, VectorAdditionTest) {
     Vector<T> v0(5);
     Vector<T> v1(5, 1.0);
     Vector<T> v2(5, 2.0);
@@ -41,7 +41,7 @@ TEST_EACH_FP_TYPE(VectorAdditionTest, BasicAssertions) {
     EXPECT_VECTOR_EQ(w0, w1);
 }
 
-TEST_EACH_FP_TYPE(VectorMulTest, BasicAssertions) {
+TEST_EACH_FP_TYPE(MathTests, VectorMulTest) {
     Vector<T> v0(5);
     Vector<T> v1(5, 1.0);
     Vector<T> v2(5, 2.0);
@@ -81,7 +81,7 @@ TEST_EACH_FP_TYPE(VectorMulTest, BasicAssertions) {
     EXPECT_VECTOR_EQ(w0, w2);
 }
 
-TEST_EACH_FP_TYPE(VectorDotProdTest, BasicAssertions) {
+TEST_EACH_FP_TYPE(MathTests, VectorDotProdTest) {
     Vector<T> v2(5, 2.0);
     Vector<T> v3(5, 3.0);
 

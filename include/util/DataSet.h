@@ -6,9 +6,16 @@
 
 class DataSet {
 
+   private:
+    std::vector<float> features;
+    std::vector<float> labels;
+    std::mt19937 random;
+    const uint32_t batchSize;
+    uint32_t currentBatch = 0;
+
    public:
     DataSet(std::vector<float> features, std::vector<float> labels, std::mt19937 random,
-            int batchSize)
+            uint32_t batchSize)
         : features(features), labels(labels), random(random), batchSize(batchSize) {
         if (this->size() % batchSize != 0) {
             throw new std::invalid_argument("Dataset size must be divisible by batch size");
@@ -17,7 +24,7 @@ class DataSet {
 
     [[nodiscard]] inline int size() const { return this->features.size(); }
 
-    inline int batches() const { return this->size() / this->batchSize; }
+    inline uint32_t batches() const { return this->size() / this->batchSize; }
 
     /**
      * Shuffles all examples
@@ -34,10 +41,4 @@ class DataSet {
      */
     std::pair<std::vector<float>, std::vector<float>> nextBatch();
 
-   private:
-    std::vector<float> features;
-    std::vector<float> labels;
-    const int batchSize;
-    int currentBatch = 0;
-    std::mt19937 random;
 };

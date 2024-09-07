@@ -3,13 +3,13 @@
 
 void DenseLayer::init(std::mt19937& rand) {
 
-    for (int i = 0; i < this->weights.getWidth(); i++) {
-        for (int j = 0; j < this->weights.getHeight(); j++) {
+    for (uint32_t i = 0; i < this->weights.getWidth(); i++) {
+        for (uint32_t j = 0; j < this->weights.getHeight(); j++) {
             this->weights.set(i, j, initializeWeight(this->weightInit, rand, this->inputSize));
         }
     }
 
-    for (int i = 0; i < this->biases.length(); i++) {
+    for (uint32_t i = 0; i < this->biases.length(); i++) {
         this->biases[i] = initializeWeight(this->weightInit, rand, this->inputSize);
     }
 }
@@ -25,8 +25,6 @@ void DenseLayer::processInput(const Vector<float>& inputs) {
         throw std::invalid_argument(
             "DenseLayer received a greater amount of inputs than expected!");
 
-    Vector activation = this->weights * inputs + this->biases;
-
-    this->zValues = activation;
-    this->activationVec = apply(activation, this->activationFunction);
+    this->zValues = this->weights * inputs + this->biases;
+    this->activationVec = apply(this->zValues, this->activationFunction);
 }

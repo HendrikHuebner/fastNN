@@ -5,7 +5,7 @@
 #include "vector"
 
 std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers,
-                                          const Vector<float>& nablaCost) {
+                                        const Vector<float>& nablaCost) {
 
     std::vector<Vector<float>> errors;
 
@@ -14,15 +14,14 @@ std::vector<Vector<float>> calculateError(const std::vector<Layer*> layers,
 
     // Backpropagation
     Layer* prev = nullptr;
-    Vector prevError = nablaCost;
+    const Vector<float> *prevError = &nablaCost;
 
     while (index >= 0) {
         Layer* layer = layers[index];
 
-        Vector error = layer->calculateError(prev, prevError);
-        errors[index] = error;
+        errors[index] = layer->calculateError(prev, *prevError);
 
-        prevError = error;
+        prevError = &errors[index];
         prev = layer;
 
         index--;
@@ -36,8 +35,8 @@ Matrix<float>* calcWeightGradientAt(Layer* layer, int index, const Vector<float>
     auto matrix = new Matrix<float>(prevActivation.length(), layer->getOutputSize());
     const Vector error = errors[index];
 
-    for (int i = 0; i < matrix->getWidth(); i++) {
-        for (int j = 0; j < matrix->getHeight(); j++) {
+    for (uint32_t j = 0; j < matrix->getHeight(); j++) {
+        for (uint32_t i = 0; i < matrix->getWidth(); i++) {
             matrix->set(i, j, error[j] * prevActivation[i]);
         }
     }

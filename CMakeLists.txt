@@ -8,6 +8,7 @@ set(CMAKE_CPP_COMPILER gcc)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fno-stack-protector")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -Wpedantic -Wno-unused-parameter")
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast")
 
@@ -21,7 +22,6 @@ set(SAN "none" CACHE STRING "Sanitizer (none, address, thread, undefined)")
 # sources 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 add_library(fastNN SHARED  ${INCLUDE_FILES} ${SOURCE_FILES})
 add_subdirectory(src)
 add_subdirectory(include)
@@ -30,16 +30,16 @@ target_include_directories(fastNN PUBLIC ${INCLUDE_DIR})
 
 if (SAN STREQUAL "address")
     message(STATUS "Enabling AddressSanitizer.")
-    set(SANITIZER_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
     set(ENV{ASAN_OPTIONS} "detect_leaks=1")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
 
 elseif (SAN STREQUAL "thread")
     message(STATUS "Enabling ThreadSanitizer.")
-    set(SANITIZER_FLAGS "-fsanitize=thread")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=thread")
 
 elseif (SAN STREQUAL "undefined")
     message(STATUS "Enabling UB Sanitizer.")
-    set(SANITIZER_FLAGS "-fsanitize=undefined")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
 endif()
 
 if (AVX_MODE)
@@ -56,8 +56,8 @@ if (AVX_MODE)
             message(STATUS "Enabling AVX512.")
 
         else()
-
             message(WARNING "AVX512 not supported by the compiler. Falling back to regular implementation.")
+            
         endif()
     endif()
 endif()

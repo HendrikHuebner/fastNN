@@ -1,10 +1,12 @@
 #pragma once
 
 #include <cstdint>
+#include <cstring>
 #include <stdexcept>
 #include <vector>
 #include "Vector.h"
 #include "util/helpers.h"
+#include <iostream>
 
 /**
  * Generic Matrix class with trivial implementation of different operations.
@@ -14,9 +16,9 @@ class Matrix {
 
    private:
     T* data;
-    const uint64_t size;
-    const uint32_t height;
     const uint32_t width;
+    const uint32_t height;
+    const uint64_t size;
 
    public:
     Matrix(uint32_t width, uint32_t height) : width(width), height(height), size(width * height) {
@@ -26,25 +28,30 @@ class Matrix {
     Matrix(uint32_t width, uint32_t height, T init)
         : width(width), height(height), size(width * height) {
         this->data = new T[this->size];
-        for (int i = 0; i < size; i++) {
+        for (uint32_t i = 0; i < size; i++) {
             this->data[i] = init;
         }
     }
 
     Matrix(uint32_t width, uint32_t height, T data[])
-        : width(width), height(height), size(width * height), data(data) {}
+        : data(data), width(width), height(height), size(width * height) {}
 
     Matrix(const Matrix& copy)
-        : width(copy.width), height(copy.height), size(copy.size), data(copy.data) {}
+        : width(copy.width), height(copy.height), size(copy.size) {
+            this->data = new T[this->size];
+            std::memcpy(copy.data, this->data, copy.size);
+    }
+
+    // delete implicit copy constructor to prevent accidental copies
+    Matrix<T>& operator=(Matrix<T>& copy) = delete;
 
     ~Matrix() { delete[] data; }
 
     static Matrix<T> ident(uint32_t size) {
-        Matrix<T> m(size, size);
-        for (int i = 0; i < size; i++) {
-            m.data[i * (1 + size)] = (T)1.0;
+        Matrix<T> m(size, size, (T) 0.0);
+        for (uint32_t i = 0; i < size; i++) {
+            m.data[i * (1 + size)] = 1.0;
         }
-        printf("eeeeee\n");
         return m;
     }
 
@@ -52,7 +59,7 @@ class Matrix {
 
     T operator[](const size_t index) const { return data[index]; }
 
-    void set(const int x, const int y, T f) { this->data[x + y * this->width] = f; }
+    void set(const uint32_t x, const uint32_t y, T f) { this->data[x + y * this->width] = f; }
 
     uint32_t getWidth() const { return this->width; }
 
@@ -70,8 +77,8 @@ class Matrix {
             throw std::invalid_argument("Matrix dimensions do not match");
         }
 
-        for (int i = 0; i < this->size; i++) {
-            result[i] += other[i];
+        for (uint32_t i = 0; i < this->size; i++) {
+            result[i] = this->data[i] + other[i];
         }
     }
 
@@ -84,10 +91,11 @@ class Matrix {
             throw std::invalid_argument("Result matrix dimensions do not match");
         }
 
-        for (int i = 0; i < this->size; i++) {
-            result[i] += other[i];
+        for (uint32_t i = 0; i < this->size; i++) {
+            result[i] = this->data[i] - other[i];
         }
     }
+
 
     void mul(Matrix<T>& result, const Matrix<T>& other) const {
 
@@ -99,28 +107,26 @@ class Matrix {
                 "Result matrix size does not match operands, cannot multiply matrices.");
         }
 
-        for (int i = 0; i < other.width; i++) {
-            for (int j = 0; j < this->height; j++) {
+        for (uint32_t j = 0; j < this->height; j++) {
+            for (uint32_t i = 0; i < other.width; i++) {
                 float cell = 0;
 
-                for (int k = 0; k < this->width; k++) {
-                    printf("+ %f * %f ", this->data[k + j * this->width],
-                           other[i + other.width * k]);
+                for (uint32_t k = 0; k < this->width; k++) {
                     cell += this->data[k + j * this->width] * other[i + other.width * k];
                 }
-                printf("\n");
-                result[i + result.width * j] = cell;
+                result.data[i + result.width * j] = cell;
             }
         }
     }
+
 
     void mul(Vector<T>& result, const Vector<T>& other) const {
         if (this->height != other.length()) {
             throw std::invalid_argument("Matrix height must equal vector size");
         }
 
-        for (int i = 0; i < this->width; i++) {
-            for (int j = 0; j < this->height; j++) {
+        for (uint32_t i = 0; i < this->width; i++) {
+            for (uint32_t j = 0; j < this->height; j++) {
                 result[i] += this->data[j + i * this->width] * other[j];
             }
         }
@@ -131,9 +137,9 @@ class Matrix {
             throw std::invalid_argument("Result matrix size mismatch, cannot transpose matrix.");
         }
 
-        for (int i = 0; i < this->height; i++) {
-            for (int j = 0; j < this->width; j++) {
-                result[i * this->width + j] = this->data[j * this->width + i];
+        for (uint32_t i = 0; i < this->height; i++) {
+            for (uint32_t j = 0; j < this->width; j++) {
+                result.data[i * this->width + j] = this->data[j * this->width + i];
             }
         }
     }

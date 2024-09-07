@@ -12,7 +12,7 @@ class Model {
     std::vector<Layer*> layers;
     CostFunction cost;
     std::unique_ptr<GradientUpdater> gradientUpdater;
-    int parameterCount = 0;
+    uint32_t parameterCount = 0;
 
    public:
     void init();
@@ -24,7 +24,7 @@ class Model {
      * @param layerIndex
      * @return network output
      */
-    Vector<float> propagateData(const Vector<float> data, const int layerIndex);
+    Vector<float> propagateData(const Vector<float> data, const uint32_t layerIndex);
 
     /**
      * Uses gradient descent and backpropagation to update the weights and biases in this network.

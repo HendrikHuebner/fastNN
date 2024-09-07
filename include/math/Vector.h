@@ -25,9 +25,14 @@ class Vector {
 
     Vector(const Vector& copy) : data(copy.data), size(copy.size) {}
 
+    Vector& operator=(const Vector& other) = default;
+    
+
     ~Vector() { delete[] data; }
 
     size_t length() const { return this->size; }
+    
+    size_t getSize() const { return this->size; }
 
     T& operator[](size_t index) { return data[index]; }
 
@@ -36,13 +41,13 @@ class Vector {
     std::vector<T> toStdVector() const { return std::vector(data, data + this->size); }
 
     void add(Vector<T>& result, const Vector& other) const {
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] + other.data[i];
         }
     }
 
     void sub(Vector<T>& result, const Vector& other) const {
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] - other.data[i];
         }
     }
@@ -51,26 +56,26 @@ class Vector {
      * Element wise multiplication
      */
     void mul(Vector<T>& result, const Vector& other) const {
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] * other.data[i];
         }
     }
 
     void mul(Vector<T>& result, T scalar) const {
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] * scalar;
         }
     }
 
     void div(Vector<T>& result, const Vector& other) const {
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             result.data[i] = this->data[i] / other.data[i];
         }
     }
 
     T dot(const Vector& other) const {
         T sum(0.0);
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             sum += this->data[i] * other.data[i];
         }
 
@@ -79,7 +84,7 @@ class Vector {
 
     T max() const {
         T max(0.0);
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             max = (this->data[i] > max) ? this->data[i] : max;
         }
 
@@ -97,7 +102,7 @@ class Vector {
     }
 
     void clamp(Vector<T>& result, T min, T max) const {
-        for (int i = 0; i < this->length(); i++) {
+        for (uint32_t i = 0; i < this->length(); i++) {
             result[i] = clamp(this->data[i], min, max);
         }
     }

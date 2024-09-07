@@ -1,8 +1,8 @@
 build_dir := "./build"
 
-# Build Release binary
+# Build release binary
 default:
-    cmake -B {{build_dir}} -G Ninja -DCMAKE_BUILD_TYPE=Release
+    cmake -B {{build_dir}} -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF
     ninja -C {{build_dir}}
 
 # Build debug binary
@@ -26,14 +26,13 @@ check TEST:
 check-all-asan:
     cmake -B {{build_dir}} -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DAVX_MODE=ON -DBUILD_TESTS=ON -DSAN=address
     ninja -C {{build_dir}}
-    ctest --test-dir {{build_dir}} --output-on-failure
+    ./{{build_dir}}/tests
 
 # Build debug with UB sanitization and test
 check-all-ubsan:
     cmake -B {{build_dir}} -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DAVX_MODE=ON -DBUILD_TESTS=ON -DSAN=undefined
     ninja -C {{build_dir}}
-    ctest --test-dir {{build_dir}} --output-on-failure
+    ./{{build_dir}}/tests
 
 clean:
     rm -rf {{build_dir}}/*
-    
