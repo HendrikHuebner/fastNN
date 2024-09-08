@@ -133,13 +133,13 @@ class Matrix {
     }
 
     void transpose(const Matrix<T>& result) const {
-        if (this->width != result.width || this->height != result.height) {
+        if (this->width != result.height || this->height != result.width) {
             throw std::invalid_argument("Result matrix size mismatch, cannot transpose matrix.");
         }
 
         for (uint32_t i = 0; i < this->height; i++) {
             for (uint32_t j = 0; j < this->width; j++) {
-                result.data[i * this->width + j] = this->data[j * this->width + i];
+                result.data[j * this->height + i] = this->data[i * this->width + j];
             }
         }
     }

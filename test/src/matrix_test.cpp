@@ -68,7 +68,7 @@ TEST_EACH_FP_TYPE(MathTests, Transpose) {
     T* a = new T[]{1, 2, 3, 4, 5, 6};
     Matrix<T> A(3, 2, a);
 
-    T* b = new T[]{1, 2, 3, 4, 5, 6};
+    T* b = new T[]{1, 4, 2, 5, 3, 6};
     Matrix<T> B(2, 3, b);
 
     T* a2 = new T[]{1, 2, 3, 4};
@@ -77,11 +77,12 @@ TEST_EACH_FP_TYPE(MathTests, Transpose) {
     T* b2 = new T[]{1, 2, 3, 4};
     Matrix<T> B2(4, 1, b2);
 
-    Matrix<T> C(2, 3, b2);
-    Matrix<T> C2(4, 1, b2);
+    Matrix<T> C(2, 3);
+    Matrix<T> C2(4, 1);
+
     A.transpose(C);
     A2.transpose(C2);
-    
+
     EXPECT_MATRIX_EQ(C, B);
     EXPECT_MATRIX_EQ(C2, B2);
 
