@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <vector>
 #include "util/helpers.h"
+#include <cstring>
 
 template <typename T, typename = enable_if_float<T>>
 class Vector {
@@ -23,16 +24,21 @@ class Vector {
         std::fill_n(this->data, size, 0);
     }
 
+    Vector(std::initializer_list<T> list) {
+        this->size = list.size();
+        this->data = new T[this->size];
+        std::memcpy(this->data, list.begin(), this->size * sizeof(T));
+    }
+
     Vector(const Vector& copy) : data(copy.data), size(copy.size) {}
 
     Vector& operator=(const Vector& other) = default;
-    
-
-    ~Vector() { delete[] data; }
 
     size_t length() const { return this->size; }
     
     size_t getSize() const { return this->size; }
+
+    ~Vector() { delete[] data; }
 
     T& operator[](size_t index) { return data[index]; }
 

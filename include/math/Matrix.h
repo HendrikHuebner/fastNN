@@ -39,7 +39,7 @@ class Matrix {
     Matrix(const Matrix& copy)
         : width(copy.width), height(copy.height), size(copy.size) {
             this->data = new T[this->size];
-            std::memcpy(copy.data, this->data, copy.size);
+            std::memcpy(copy.data, this->data, copy.size * sizeof(T));
     }
 
     // delete implicit copy constructor to prevent accidental copies

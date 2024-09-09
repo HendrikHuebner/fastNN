@@ -3,4 +3,5 @@ target_sources(tests
     ${CMAKE_CURRENT_SOURCE_DIR}/test_main.h
     ${CMAKE_CURRENT_SOURCE_DIR}/matrix_test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/vector_test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/activation_functions_test.cpp
 )
