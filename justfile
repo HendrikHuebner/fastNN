@@ -14,8 +14,8 @@ debug:
 check-all:
     cmake -B {{build_dir}} -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DAVX_MODE=ON -DBUILD_TESTS=ON
     ninja -C {{build_dir}}
-    ctest --test-dir {{build_dir}} --output-on-failure
-
+    ctest --test-dir {{build_dir}} --output-on-failure -v 
+    
 # Build release and run specific test
 check TEST:
     cmake -B {{build_dir}} -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DAVX_MODE=ON -DBUILD_TESTS=ON

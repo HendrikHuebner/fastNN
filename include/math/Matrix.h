@@ -8,10 +8,11 @@
 #include "util/helpers.h"
 #include <iostream>
 
+
 /**
  * Generic Matrix class with trivial implementation of different operations.
  */
-template <typename T, typename = enable_if_float<T>>
+template <typename T>
 class Matrix {
 
    private:
@@ -72,7 +73,6 @@ class Matrix {
     std::vector<T> toStdVector() { return std::vector(this->data, this->data + this->size); }
 
     void add(Matrix<T>& result, const Matrix<T>& other) const {
-
         if (this->width != other.width || this->height != other.height) {
             throw std::invalid_argument("Matrix dimensions do not match");
         }
@@ -96,7 +96,6 @@ class Matrix {
         }
     }
 
-
     void mul(Matrix<T>& result, const Matrix<T>& other) const {
 
         if (this->width != other.height) {
@@ -118,7 +117,6 @@ class Matrix {
             }
         }
     }
-
 
     void mul(Vector<T>& result, const Vector<T>& other) const {
         if (this->height != other.length()) {
@@ -168,3 +166,10 @@ class Matrix {
         return result;
     }
 };
+
+
+template <>
+void Matrix<float>::add(Matrix<float>& result, const Matrix<float>& B) const;
+
+template <>
+void Matrix<float>::mul(Matrix<float>& result, const Matrix<float>& other) const;  

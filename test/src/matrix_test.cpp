@@ -13,6 +13,8 @@ TEST_EACH_FP_TYPE(MathTests, MatrixAdd) {
     EXPECT_MATRIX_EQ(m1 + m2, m3);
     EXPECT_MATRIX_EQ(m1 - m2 + m3 - m0, m2);
     EXPECT_MATRIX_EQ(m1 - m1, m0);
+    EXPECT_TRUE(false);
+
 }
 
 TEST_EACH_FP_TYPE(MathTests, SquareMatrixMul) {
