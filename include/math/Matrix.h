@@ -1,13 +1,13 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <cstring>
 #include <stdexcept>
 #include <vector>
 #include "Vector.h"
-#include "util/helpers.h"
-#include <iostream>
 
+#include <iostream>
 
 /**
  * Generic Matrix class with trivial implementation of different operations.
@@ -23,30 +23,29 @@ class Matrix {
 
    public:
     Matrix(uint32_t width, uint32_t height) : width(width), height(height), size(width * height) {
-        this->data = new T[this->size];
+        size_t s = ((sizeof(T) * size + 31) / 32) * 32;
+        this->data = static_cast<T*>(std::aligned_alloc(32, s));
     }
 
-    Matrix(uint32_t width, uint32_t height, T init)
-        : width(width), height(height), size(width * height) {
-        this->data = new T[this->size];
-        for (uint32_t i = 0; i < size; i++) {
-            this->data[i] = init;
-        }
+    Matrix(uint32_t width, uint32_t height, T init) : Matrix(width, height) {
+        std::fill_n(this->data, size, init);
     }
 
-    Matrix(uint32_t width, uint32_t height, T data[])
-        : data(data), width(width), height(height), size(width * height) {}
-
-    Matrix(const Matrix& copy)
-        : width(copy.width), height(copy.height), size(copy.size) {
-            this->data = new T[this->size];
-            std::memcpy(copy.data, this->data, copy.size * sizeof(T));
+    Matrix(uint32_t width, uint32_t height, T init[]) : Matrix(width, height) {
+        std::memcpy(this->data, init, this->size * sizeof(T));
     }
 
-    // delete implicit copy constructor to prevent accidental copies
+    explicit Matrix(const Matrix& copy) : Matrix(copy.width, copy.height) {
+        std::memcpy(copy.data, this->data, copy.size * sizeof(T));
+    }
+
     Matrix<T>& operator=(Matrix<T>& copy) = delete;
+    
+    Matrix<T>(Matrix<T>&&) = default;
 
-    ~Matrix() { delete[] data; }
+    Matrix<T>& operator=(Matrix<T>&&) = default;
+    
+    ~Matrix() {  delete[] data; }
 
     static Matrix<T> ident(uint32_t size) {
         Matrix<T> m(size, size, (T) 0.0);
@@ -140,6 +139,18 @@ class Matrix {
                 result.data[j * this->height + i] = this->data[i * this->width + j];
             }
         }
+    }
+
+    bool operator==(const Matrix<T>& other) const {
+        if (this->size != other.getSize())
+            return false;
+
+        for (uint32_t i = 0; i < this->size; i++) {
+            if (this->data[i] != other.data[i])
+                return false;
+        }
+        
+        return true;
     }
 
     Matrix<T> operator+(const Matrix<T>& other) const {

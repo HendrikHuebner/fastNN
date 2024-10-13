@@ -1,10 +1,9 @@
 #include "math/Matrix.h"
 #include <gtest/gtest.h>
 #include "test_util.h"
-#include "util/debug_tools.h"
 
 TEST_EACH_FP_TYPE(MathTests, MatrixAdd) {
-    Matrix<T> m0(5, 5, (T)0);
+    Matrix<T> m0(5, 5, (T)0.0);
     Matrix<T> m1(5, 5, (T)1.0);
     Matrix<T> m2(5, 5, (T)2.0);
     Matrix<T> m3(5, 5, (T)3.0);
@@ -13,8 +12,6 @@ TEST_EACH_FP_TYPE(MathTests, MatrixAdd) {
     EXPECT_MATRIX_EQ(m1 + m2, m3);
     EXPECT_MATRIX_EQ(m1 - m2 + m3 - m0, m2);
     EXPECT_MATRIX_EQ(m1 - m1, m0);
-    EXPECT_TRUE(false);
-
 }
 
 TEST_EACH_FP_TYPE(MathTests, SquareMatrixMul) {

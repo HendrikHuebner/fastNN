@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <cstdint>
 
 #define ASSERT_VECTOR_SIZE_EQ(v, e) ASSERT_EQ((v).length(), (e).length())
 

@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <cstddef>
+#include <cstdlib>
 #include <vector>
 #include "util/helpers.h"
 #include <cstring>
@@ -14,19 +15,16 @@ class Vector {
     size_t size;
 
    public:
-    Vector(size_t size, T init) : size(size) {
-        this->data = new T[size];
+    Vector(size_t size) : size(size) {
+        size_t s = ((sizeof(T) * size + 31) / 32) * 32;
+        this->data = static_cast<T*>(std::aligned_alloc(32, s));
+    }
+
+    Vector(size_t size, T init) : Vector(size) {
         std::fill_n(this->data, size, init);
     }
 
-    Vector(size_t size) : size(size) {
-        this->data = new T[size];
-        std::fill_n(this->data, size, 0);
-    }
-
-    Vector(std::initializer_list<T> list) {
-        this->size = list.size();
-        this->data = new T[this->size];
+    Vector(std::initializer_list<T> list) : Vector(list.size()) {
         std::memcpy(this->data, list.begin(), this->size * sizeof(T));
     }
 
@@ -111,6 +109,18 @@ class Vector {
         for (uint32_t i = 0; i < this->length(); i++) {
             result[i] = clamp(this->data[i], min, max);
         }
+    }
+
+    bool operator==(const Vector<T>& other) const {
+        if (this->size != other.getSize())
+            return false;
+
+        for (uint32_t i = 0; i < this->size; i++) {
+            if (this->data[i] != other.data[i])
+                return false;
+        }
+        
+        return true;
     }
 
     Vector<T> operator+(const Vector<T>& other) const {

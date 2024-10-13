@@ -30,7 +30,7 @@ class Layer {
 
     Vector<float> getActivationVec() const { return this->activationVec; }
 
-    virtual uint32_t getParameterCount() const { return 0; }
+    virtual uint32_t getParameterCount() const = 0;
 
     virtual Vector<float> calculateError(Layer* previous, const Vector<float> prevError) = 0;
 

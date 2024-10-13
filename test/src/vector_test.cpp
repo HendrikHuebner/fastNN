@@ -6,12 +6,12 @@
 using namespace std;
 
 TEST_EACH_FP_TYPE(MathTests, VectorAdditionTest) {
-    Vector<T> v0(5);
+    Vector<T> v0(5, 0.0);
     Vector<T> v1(5, 1.0);
     Vector<T> v2(5, 2.0);
     Vector<T> v3(5, 3.0);
 
-    Vector<T> w0(500);
+    Vector<T> w0(500, 0.0);
     Vector<T> w1(500, 1.0);
     Vector<T> w2(500, 2.0);
     Vector<T> w3(500, 3.0);
@@ -42,12 +42,12 @@ TEST_EACH_FP_TYPE(MathTests, VectorAdditionTest) {
 }
 
 TEST_EACH_FP_TYPE(MathTests, VectorMulTest) {
-    Vector<T> v0(5);
+    Vector<T> v0(5, 0.0);
     Vector<T> v1(5, 1.0);
     Vector<T> v2(5, 2.0);
     Vector<T> v4(5, 4.0);
 
-    Vector<T> w0(500);
+    Vector<T> w0(500, 0.0);
     Vector<T> w1(500, 1.0);
     Vector<T> w2(500, 2.0);
     Vector<T> w4(500, 4.0);

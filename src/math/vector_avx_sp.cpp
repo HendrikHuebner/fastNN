@@ -1,4 +1,4 @@
-#ifdef __AVX512__
+#ifdef __AVX2__K
 
 #include <immintrin.h>
 #include <smmintrin.h>

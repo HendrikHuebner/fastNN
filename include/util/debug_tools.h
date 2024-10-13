@@ -1,6 +1,7 @@
 #pragma once
 
 #include "math/Matrix.h"
+#include <cstdint>
 #include <iostream>
 #include <iomanip>
 
@@ -8,21 +9,21 @@
  *  Pretty print Matrix
  */
 template <typename T>
-void pMat(const Matrix<T>& m) {
-    const int columnWidth = 7;
+void printMatrix(const Matrix<T>& m) {
+    const uint32_t columnWidth = 7;
 
     std::cout << "+";
 
-    for (int i = 0; i < m.getWidth() * (columnWidth + 1) + 1; i++) {
+    for (uint32_t i = 0; i < m.getWidth() * (columnWidth + 1) + 1; i++) {
         std::cout << "-";
     }
 
     std::cout << "+" << std::endl;
 
-    for (int i = 0; i < m.getHeight(); i++) {
+    for (uint32_t i = 0; i < m.getHeight(); i++) {
         std::cout << "| ";
 
-        for (int j = 0; j < m.getWidth(); j++) {
+        for (uint32_t j = 0; j < m.getWidth(); j++) {
             std::cout << std::fixed << std::setprecision(3) << std::setw(columnWidth)
                       << m[i * m.getWidth() + j] << " ";
         }
@@ -32,7 +33,7 @@ void pMat(const Matrix<T>& m) {
 
     std::cout << "+";
 
-    for (int i = 0; i < m.getWidth() * (columnWidth + 1) + 1; i++) {
+    for (uint32_t i = 0; i < m.getWidth() * (columnWidth + 1) + 1; i++) {
         std::cout << "-";
     }
 
@@ -40,11 +41,11 @@ void pMat(const Matrix<T>& m) {
 }
 
 template <typename T>
-void pVec(const Vector<T>& v) {
-    const int columnWidth = 7;
+void printVector(const Vector<T>& v) {
+    const uint32_t columnWidth = 7;
 
     std::cout << "Vector(" << v.getSize() <<  "):  {";
-    for (int i = 0; i < v.getSize(); i++) {
+    for (uint32_t i = 0; i < v.getSize(); i++) {
         if (i > 0) 
             std::cout << ", ";
 

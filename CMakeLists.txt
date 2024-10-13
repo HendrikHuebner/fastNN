@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(fastNN)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CPP_COMPILER gcc)
 
@@ -30,7 +30,7 @@ target_include_directories(fastNN PUBLIC ${INCLUDE_DIR})
 
 if (SAN STREQUAL "address")
     message(STATUS "Enabling AddressSanitizer.")
-    set(ENV{ASAN_OPTIONS} "detect_leaks=1")
+    set(ENV{ASAN_OPTIONS} "detect_leaks=1,detect_odr_violation=0")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
 
 elseif (SAN STREQUAL "thread")
@@ -44,19 +44,19 @@ endif()
 
 if (AVX_MODE)
     if (CUDA_MODE)
-        message(WARNING "CUDA and AVX512 are both enabled. Using CUDA implementation.")
+        message(WARNING "CUDA and AVX2 are both enabled. Using CUDA implementation.")
 
     else()
         include(CheckCXXCompilerFlag)
-        check_cxx_compiler_flag("-mavx512f" COMPILER_SUPPORTS_AVX512)
+        check_cxx_compiler_flag("-mavx2" COMPILER_SUPPORTS_AVX2)
 
-        if(COMPILER_SUPPORTS_AVX512)
-            add_definitions(-D__AVX512__)
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mavx512f")
-            message(STATUS "Enabling AVX512.")
+        if(COMPILER_SUPPORTS_AVX2)
+            add_definitions(-D__AVX2__)
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mavx2")
+            message(STATUS "Enabling AVX2.")
 
         else()
-            message(WARNING "AVX512 not supported by the compiler. Falling back to regular implementation.")
+            message(WARNING "AVX2 not supported by the compiler. Falling back to regular implementation.")
             
         endif()
     endif()

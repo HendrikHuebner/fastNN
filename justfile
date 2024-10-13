@@ -24,7 +24,7 @@ check TEST:
 
 # Build debug with address sanitization and test
 check-all-asan:
-    cmake -B {{build_dir}} -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DAVX_MODE=OFF -DBUILD_TESTS=ON -DSAN=address
+    cmake -B {{build_dir}} -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DAVX_MODE=ON -DBUILD_TESTS=ON -DSAN=address
     ninja -C {{build_dir}}
     ./{{build_dir}}/tests
 
