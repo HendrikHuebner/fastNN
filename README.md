@@ -6,7 +6,7 @@ A small neural network library written in C++
 
 ## TODOs
 - [x] Basic non-parallel implementation on the CPU
-- [ ] AVX512 accellerated linear algebra operations
+- [x] AVX512 accellerated linear algebra operations
 - [ ] CUDA accellerated math and backpropagation
 - [ ] half precision / bfloat support
 
